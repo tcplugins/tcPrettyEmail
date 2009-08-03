@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>netwolfuk.TeamCity.Plugins</groupId>
+	<artifactId>tcPrettyEmail</artifactId>
+	<name>tcPrettyEmail</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>A pretty emailer for TeamCity</description>
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+		<dependency>
+			<groupId>com.jetbrains.teamcity</groupId>
+			<artifactId>server-api</artifactId>
+			<version>4.5.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+		<dependency>
+			<groupId>com.jetbrains.teamcity</groupId>
+			<artifactId>runtime-util</artifactId>
+			<version>4.5.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- TeamCity/webapps/WEB-INF/lib/server-model.jar -->
+		<!--
+			<dependency> <groupId>com.jetbrains.teamcity</groupId>
+			<artifactId>model</artifactId> <version>4.0.2</version>
+			<scope>provided</scope> </dependency>
+		-->
+
+		<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+		<dependency>
+			<groupId>com.jetbrains.teamcity</groupId>
+			<artifactId>common-api</artifactId>
+			<version>4.5.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>2.0.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.intellij</groupId>
+			<artifactId>openapi</artifactId>
+			<version>6.0.5</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
