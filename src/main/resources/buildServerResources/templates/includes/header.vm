@@ -1,0 +1,41 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html><head>
+
+<style>
+
+	body {
+		color:#3f3f3f;
+		font-family:tahoma,verdana,arial,sans-serif;
+	}
+
+
+</style></head>
+<body bgcolor="#ffffff">
+
+<table width=95%>
+  <tr>
+    <td colspan=4>
+     <a href="$info.rootURL/project.html?projectId=$info.projectId">$info.projectName</a> - 
+     <a href="$info.rootURL/viewType.html?buildTypeId=$info.buildTypeId">$info.buildTypeName</a>
+   </td>
+  </tr>
+  <tr><td><img src='cid:buildState000'></td><td>$buildStateLong</td><td>Agent:</td><td>$info.agentName</td></tr>
+  <tr><td>Time:</td><td>$buildStateLong</td><td>Triggered:</td><td>$info.triggeredBy</td></tr>
+  <tr><td>Changes:</td>
+#set ($changeCount = $changes.size())
+#if ($changeCount == 1)
+	<td>$changeCount change</td>
+	#else
+		<td>$changeCount changes</td>
+	#end
+	
+	<td>Tests:</td>
+	#set ($testCount = $tests.size())
+	#if ($testCount == 1)
+	<td>$testCount test failed</td>
+	#else
+		<td>$testCount tests failed</td>
+	#end
+	
+	</tr></table>

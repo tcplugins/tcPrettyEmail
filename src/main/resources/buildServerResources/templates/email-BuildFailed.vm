@@ -1,0 +1,6 @@
+#set( $buildStateLong = "Build Failed")
+#parse( "includes/header.vm" )
+#parse( "includes/problems.vm" )
+			#parse( "includes/changes.vm" )
+#parse( "includes/tests.vm" )
+#parse( "includes/footer.vm" )

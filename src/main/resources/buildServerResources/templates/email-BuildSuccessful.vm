@@ -1,0 +1,5 @@
+#set( $buildStateLong = "Build Successful")
+#parse( "includes/header.vm" )
+#parse( "includes/changes.vm" )
+#parse( "includes/tests.vm" )
+#parse( "includes/footer.vm" )

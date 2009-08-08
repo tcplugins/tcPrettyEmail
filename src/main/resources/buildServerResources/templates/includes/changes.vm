@@ -1,0 +1,17 @@
+<h2>Changes</h2>
+#set ($changeCount = $changes.size()) 
+#if ($changeCount == 0)
+	<p>There are no changes since the last successful build</p>
+	#else
+		<p>There are $changeCount changes since the last successful build</p>
+	#end
+
+<table>
+#foreach( $change in $changes)
+#set ($files = $change.getChanges() )
+  <tr><td valign=top>$change.getUserName()</td><td>$change.getDescription()</td><td>$change.getChangeCount()</td><td>$change.getDisplayVersion()</td></tr>
+  #foreach( $file in $files)
+    <tr><td></td><td colspan=3>$file.getRelativeFileName()</td></tr>
+  #end
+#end
+</table>

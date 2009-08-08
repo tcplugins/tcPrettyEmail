@@ -1,0 +1,13 @@
+<h2>Tests</h2>
+#set ($testCount = $tests.size()) 
+#if($testCount == 0)
+	<p>All tests have passed</p>
+	#else
+		<p>There are $testCount failed tests</p>
+	#end
+
+	<table>
+#foreach( $test in $tests)
+    <tr><td>$test.toString()</td><td>$test.getStacktrace()</td></tr>
+#end
+</table>
