@@ -3,39 +3,92 @@
 <html><head>
 
 <style>
-
-	body {
+	body, td {
 		color:#3f3f3f;
 		font-family:tahoma,verdana,arial,sans-serif;
+		font-size:82%;
 	}
 
+	table {
+	  background-color: #fff;
+	  padding:0px;
+	  margin:0px;
+	  border:1px;
+	  border-color:#010101;
+	}
+
+	table.heading, tr.heading, td.heading {
+	  background-color: #E3E9EF;
+	  color: #101010;
+	  font-size:110%;
+	  padding:1px;
+	  margin:0px;
+	}
+
+table.heading {
+  margin-bottom: 1.5em;
+}
+
+	td.heading a:link, td.heading a:hover, td.heading a:visited {
+		color: #101010;
+		text-decoration:none;
+	}
+
+	td.name { width:20%; }
+	td.value{ width:38%; }
+	td.valueWide ( width:76%; }
+	td {
+		padding:0.25em;
+		font-size:85%;
+	}
+
+	tr.changes td {
+	  font-weight: bold;
+	}
+
+tr.changetop {
+  background-color: #eee;
+}
+
+dd {
+  margin-bottom: 0.5em;
+  font-family:monospace;
+/*
+  font-size:110%;
+  line-height:1.2em;
+  */
+}
 
 </style></head>
-<body bgcolor="#ffffff">
+<body>
 
-<table width=95%>
-  <tr>
-    <td colspan=4>
+
+
+<table width=95% class="heading">
+  <tr class=heading>
+    <td class=heading>&nbsp;<img src='cid:buildState000'>&nbsp;
      <a href="$info.rootURL/project.html?projectId=$info.projectId">$info.projectName</a> - 
      <a href="$info.rootURL/viewType.html?buildTypeId=$info.buildTypeId">$info.buildTypeName</a>
    </td>
   </tr>
-  <tr><td><img src='cid:buildState000'></td><td>$buildStateLong</td><td>Agent:</td><td>$info.agentName</td></tr>
-  <tr><td>Time:</td><td>$buildStateLong</td><td>Triggered:</td><td>$info.triggeredBy</td></tr>
-  <tr><td>Changes:</td>
+  <tr class="heading">
+    <td class="heading">
+      <table width=100%>
+  	      <tr><td class=name>Result:</td><td colspan=3 class=valueWide>$buildStateLong</td></tr>
+        <tr><td class=name>Time:</td><td class=value>$info.getDate()</td><td class=name>Triggered:</td><td class=value>$info.triggeredBy</td></tr>
+        <tr><td class=name>Changes:</td>
 #set ($changeCount = $changes.size())
 #if ($changeCount == 1)
-	<td>$changeCount change</td>
+	            <td class=value>$changeCount change</td>
 	#else
-		<td>$changeCount changes</td>
+		            <td class=value>$changeCount changes</td>
 	#end
-	
-	<td>Tests:</td>
-	#set ($testCount = $tests.size())
-	#if ($testCount == 1)
-	<td>$testCount test failed</td>
-	#else
-		<td>$testCount tests failed</td>
-	#end
-	
-	</tr></table>
+  			          <td class=name>Agent:</td><td class=value>$info.agentName</td></tr>
+      	  <tr>
+	            <td class=name>Tests:</td>
+	            <td colspan=3 class=valueWide>$info.getFailedTestCount() failed, $info.getNewFailedTestCount() new, $info.getPassedTestCount() passed, $info.getIgnoredTestCount() ignored	</td>
+	      	  </tr>
+	      	</table>
+	    </td>
+	  </tr>
+	</table>

@@ -1,13 +1,59 @@
-<h2>Tests</h2>
-#set ($testCount = $tests.size()) 
-#if($testCount == 0)
-	<p>All tests have passed</p>
+#if ($info.getFailedTestCount() == 0)
+<table width=95% class="heading">
+  <tr class=heading>
+    <td class=heading>Tests</td>
+  </tr>
+  <tr class="heading">
+    <td class="heading">
+      <table width=100%>
+        <tr><td colspan=4>
+$info.getFailedTestCount() failed, 
+$info.getNewFailedTestCount() new, 
+$info.getPassedTestCount() passed, 
+$info.getIgnoredTestCount() ignored
 	#else
-		<p>There are $testCount failed tests</p>
-	#end
-
-	<table>
-#foreach( $test in $tests)
-    <tr><td>$test.toString()</td><td>$test.getStacktrace()</td></tr>
+	<table width=95% class="heading">
+  <tr class=heading>
+    <td class=heading>Tests - $info.getFailedTestCount() failed, 
+$info.getNewFailedTestCount() new, 
+$info.getPassedTestCount() passed, 
+$info.getIgnoredTestCount() ignored
+  #if( $info.getFailedTestCount() > $info.getMaxTestCount() )
+    (Only first $info.getMaxTestCount() failed tests shown)
+  #end
+    </td>
+  </tr>
+  <tr class="heading">
+    <td class="heading">
+      <table width=100%>
+        <tr><td colspan=4>
+			  #if( $info.getFailedTestCount() > $info.getMaxTestCount() )
+			  #set( $maxTestsPlusOne = $info.getMaxTestCount() + 1 )
+			  <dl>
+    #foreach( $test in $tests )
+      #if( $velocityCount < $maxTestsPlusOne )
+        <dt>
+        #if( $test.isNew() )
+          &nbsp;<img src='cid:newTest000'>&nbsp;
+        #end	
+        <strong>$test.ShortName</strong> ($test.Package)</dt><dd>$test.getShortTextForWeb()</dd>
+      #end
+    #end
+  </dl>
+			  #else
+				  <dl>
+    #foreach( $test in $tests )
+      <dt>
+      #if( $test.isNew() )
+        &nbsp;<img src='cid:newTest000'>&nbsp;
+      #end	
+      <strong>$test.ShortName</strong> ($test.Package)</dt><dd>$test.getShortTextForWeb()</dd>
+    #end
+  </dl>
+  #end
 #end
-</table>
+	        </td></tr>
+      </table>
+	    </td>
+	  </tr>
+	</table>

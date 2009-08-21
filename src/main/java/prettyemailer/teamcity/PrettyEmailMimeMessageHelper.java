@@ -1,6 +1,7 @@
 package prettyemailer.teamcity;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.mail.MessagingException;
@@ -11,6 +12,9 @@ import jetbrains.buildServer.serverSide.SRunningBuild;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -27,7 +31,10 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 	}
 	
 	public void generateEmail(SRunningBuild sRunningBuild, 
-			String reason, String unpackedPluginLocation) throws Exception{
+			String reason, String attachmentPath) 
+		   throws ResourceNotFoundException, ParseErrorException, 
+		   			MethodInvocationException, IOException, MessagingException, Exception
+{
 		
 		VelocityContext context = new VelocityContext();
 		context.put("tests", content.getTests());
@@ -45,11 +52,17 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 		emailSubjectTemplate.merge(context, emailSubjectWriter);
 		
 		this.setText(emailBodyWriter.toString(), true);
-		this.setSubject(emailSubjectWriter.toString());
+		this.setSubject(emailSubjectWriter.toString().trim());
 		
-		FileSystemResource res = new FileSystemResource(new File(unpackedPluginLocation
-				+ "img/" + reason + ".gif"));
-		this.addInline("buildState000", res);
+		FileSystemResource buildStateResource = new FileSystemResource(new File(attachmentPath
+				+ reason + ".gif"));
+		this.addInline("buildState000", buildStateResource);
+		
+		if (content.getNewFailedTestCount() > 0){
+			FileSystemResource newTestResource = new FileSystemResource(new File(attachmentPath
+					+ "star.gif"));
+			this.addInline("newTest000", newTestResource);
+		}
 
 	}
 	

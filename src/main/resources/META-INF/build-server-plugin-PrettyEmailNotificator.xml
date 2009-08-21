@@ -3,9 +3,14 @@
 
 <beans default-autowire="constructor">
 
+	<bean id="prettyEmailMainSettings"
+		class="prettyemailer.teamcity.PrettyEmailMainSettings"
+		init-method="register"
+		/>
+
 	<bean id="prettyEmailNotificator" 
 		class="prettyemailer.teamcity.PrettyEmailNotificator" 
   		init-method="register" 
   		/>
-  
+
 </beans>
