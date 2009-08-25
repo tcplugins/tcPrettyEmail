@@ -31,7 +31,7 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 	}
 	
 	public void generateEmail(SRunningBuild sRunningBuild, 
-			String reason, String attachmentPath) 
+			String reason, boolean addAttachments, String attachmentPath) 
 		   throws ResourceNotFoundException, ParseErrorException, 
 		   			MethodInvocationException, IOException, MessagingException, Exception
 {
@@ -54,16 +54,17 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 		this.setText(emailBodyWriter.toString(), true);
 		this.setSubject(emailSubjectWriter.toString().trim());
 		
-		FileSystemResource buildStateResource = new FileSystemResource(new File(attachmentPath
-				+ reason + ".gif"));
-		this.addInline("buildState000", buildStateResource);
-		
-		if (content.getNewFailedTestCount() > 0){
-			FileSystemResource newTestResource = new FileSystemResource(new File(attachmentPath
-					+ "star.gif"));
-			this.addInline("newTest000", newTestResource);
+		if (addAttachments){
+			FileSystemResource buildStateResource = new FileSystemResource(new File(attachmentPath
+					+ reason + ".gif"));
+			this.addInline("buildState000", buildStateResource);
+			
+			if (content.getNewFailedTestCount() > 0){
+				FileSystemResource newTestResource = new FileSystemResource(new File(attachmentPath
+						+ "star.gif"));
+				this.addInline("newTest000", newTestResource);
+			}
 		}
-
 	}
 	
 }

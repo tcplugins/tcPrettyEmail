@@ -4,7 +4,7 @@ import org.jdom.Element;
 
 public class PrettyEmailMainConfig {
 	private Integer smtpPort = 25;
-	private String smtpHost = "";
+	private String smtpHost = null;
 	private String smtpUsername = null;
 	private String smtpPassword = null;
 	private String fromAddress = null;
@@ -13,6 +13,7 @@ public class PrettyEmailMainConfig {
 	private String templatePath = null;
 	private String attachmentPath = null;
 	private Integer maxTestsToShow = 5;
+	private boolean attachImages = true;
 	
 
 	public PrettyEmailMainConfig() {
@@ -53,6 +54,14 @@ public class PrettyEmailMainConfig {
 			return null;
 		}
 		
+		/*
+		  <!-- NOTE: This path is only read on TC startup, due to single 
+		  		instance of the Velocity Engine which is initialised 
+		  		in the Notifier register function. --> 
+		  <template-path path="/opt/TeamCity/prettyEmail/templates" />
+		 */
+
+		
 		Element el = new Element("template-path");
 			el.setAttribute("path", this.templatePath);
 			
@@ -63,9 +72,30 @@ public class PrettyEmailMainConfig {
 		if (this.attachmentPath == null){
 			return null;
 		}
+
+		/*
+		  <!-- NOTE: This path is only read on TC startup, due to single 
+		  		instance of the Velocity Engine which is initialised 
+		  		in the Notifier register function. --> 
+		  <attachment-path path="/opt/TeamCity/prettyEmail/attachments/img" />
+		 */
 		
 		Element el = new Element("attachment-path");
 			el.setAttribute("path", this.attachmentPath);
+			
+		return el;
+	}
+
+	public Element getAttachImagesAsElement(){
+		/*
+		  <!-- NOTE: This path is only read on TC startup, due to single 
+		  		instance of the Velocity Engine which is initialised 
+		  		in the Notifier register function. --> 
+		  <attachment-path path="/opt/TeamCity/prettyEmail/attachments/img" />
+		 */
+		
+		Element el = new Element("attach-images");
+			el.setAttribute("attach", Boolean.toString(this.attachImages));
 			
 		return el;
 	}
@@ -142,4 +172,11 @@ public class PrettyEmailMainConfig {
 		this.maxTestsToShow = maxTestsToShow;
 	}
 
+	public boolean getAttachImages() {
+		return this.attachImages ;
+	}
+
+	public void setAttachImages(boolean attachImages) {
+		this.attachImages = attachImages;
+	}
 }

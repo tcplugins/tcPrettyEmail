@@ -1,1 +1,1 @@
- Build $info.projectName :: $info.buildTypeName #$info.buildNumber failed ($info.statusLowercase)
+Build $info.projectName :: $info.buildTypeName #$info.buildNumber failed ($info.statusLowercase)

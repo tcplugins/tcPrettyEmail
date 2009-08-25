@@ -1,1 +1,1 @@
- Build $info.projectName :: $info.buildTypeName #$info.buildNumber successful	
+Build $info.projectName :: $info.buildTypeName #$info.buildNumber successful	

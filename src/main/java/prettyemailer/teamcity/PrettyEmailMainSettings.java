@@ -9,7 +9,7 @@ import org.jdom.Element;
 public class PrettyEmailMainSettings implements MainConfigProcessor {
 	private PrettyEmailMainConfig prettyEmailMainConfig;
 	private SBuildServer server;
-	private boolean SettingsExist;
+	private boolean SettingsExist = false;
 
 	public PrettyEmailMainSettings(SBuildServer server){
 		Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: Constructor called");
@@ -32,51 +32,66 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
     	PrettyEmailMainConfig tempConfig = new PrettyEmailMainConfig();
     	Element emailElement = rootElement.getChild("pretty-email");
     	if(emailElement != null){
+    		this.SettingsExist = true;
 			Element smtpElement = emailElement.getChild("smtp");
 	        if(smtpElement != null){
        	
 	        	if (smtpElement.getAttribute("host") != null){
 	        		tempConfig.setSmtpHost(smtpElement.getAttributeValue("host"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: host " + smtpElement.getAttributeValue("host"));
 	        	}
 	        	
 	        	if (smtpElement.getAttribute("port") != null){
 	        		tempConfig.setSmtpPort(Integer.parseInt(smtpElement.getAttributeValue("port")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: port " + smtpElement.getAttributeValue("port"));
 	        	}
 	
 	        	if (smtpElement.getAttribute("username") != null){
 	        		tempConfig.setSmtpUsername(smtpElement.getAttributeValue("username"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: username " + smtpElement.getAttributeValue("username"));
 	        	}
 	
 	        	if (smtpElement.getAttribute("password") != null){
 	        		tempConfig.setSmtpPassword(smtpElement.getAttributeValue("password"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: password HIDDEN");
 	        	}
 	        	
 	        	if (smtpElement.getAttribute("from-name") != null){
 	        		tempConfig.setFromName(smtpElement.getAttributeValue("from-name"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: from-name " + smtpElement.getAttributeValue("from-name"));
 	        	}
 	
 	        	if (smtpElement.getAttribute("from-address") != null){
 	        		tempConfig.setFromAddress(smtpElement.getAttributeValue("from-address"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: from-address " + smtpElement.getAttributeValue("from-address"));
 	        	}
 	        }
 	        
 			Element templatePathElement = emailElement.getChild("template-path");
 	        if(templatePathElement != null){
 	        	if (templatePathElement.getAttribute("path") != null){
-	        		tempConfig.setTemplatePath(smtpElement.getAttributeValue("path"));
+	        		tempConfig.setTemplatePath(templatePathElement.getAttributeValue("path"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: template-path " + templatePathElement.getAttributeValue("path"));
 	        	}
 	    	}
 
 	        Element attachmentPathElement = emailElement.getChild("attachment-path");
 	        if(attachmentPathElement != null){
 	        	if (attachmentPathElement.getAttribute("path") != null){
-	        		tempConfig.setAttachmentPath(smtpElement.getAttributeValue("path"));
+	        		tempConfig.setAttachmentPath(attachmentPathElement.getAttributeValue("path"));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: attachment-path " + attachmentPathElement.getAttributeValue("path"));
 	        	}
 	    	}
-	        this.SettingsExist = true;
-    	} else {
-    		this.SettingsExist = false;
-    	} 
+	        
+	        Element attachImagesElement = emailElement.getChild("attach-images");
+	        if(attachImagesElement != null){
+	        	if (attachImagesElement.getAttribute("attach") != null){
+	        		tempConfig.setAttachImages(Boolean.valueOf(attachImagesElement.getAttributeValue("attach")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: attach-images " + Boolean.valueOf(attachImagesElement.getAttributeValue("attach")));
+	        	}
+	    	}
+	        
+	    } 
     	
         this.prettyEmailMainConfig = tempConfig;
     }
@@ -109,7 +124,11 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
         {
         	el.addContent(prettyEmailMainConfig.getAttachmentPathAsElement());
         }
-        
+
+        if (   prettyEmailMainConfig != null )
+        {
+        	el.addContent(prettyEmailMainConfig.getAttachImagesAsElement());
+        }
         parentElement.addContent(el);
     }
     
