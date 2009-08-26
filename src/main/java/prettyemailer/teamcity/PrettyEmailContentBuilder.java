@@ -1,5 +1,6 @@
 package prettyemailer.teamcity;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -9,7 +10,6 @@ import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.serverSide.ShortStatistics;
 import jetbrains.buildServer.serverSide.TestBlockBean;
-import jetbrains.buildServer.serverSide.problems.BuildProblem;
 import jetbrains.buildServer.util.TimePrinter;
 import jetbrains.buildServer.vcs.SVcsModification;
 import jetbrains.buildServer.vcs.SelectPrevBuildPolicy;
@@ -25,11 +25,27 @@ public class PrettyEmailContentBuilder {
 		this.sBuildServer = server;
 		this.maxTestsToLoad = maxTestsToLoad;
 		BuildStatisticsOptions options = new BuildStatisticsOptions();
-		options.setMaxNumberOfTestsStacktracesToLoad(this.maxTestsToLoad);
-		options.setLoadCompilationErrors(false);
-		this.shortStats = this.sRunningBuild.getBuildStatistics(options);
+		this.shortStats = this.getShortStats(options);
 	}
 
+	private ShortStatistics getShortStats(BuildStatisticsOptions options){
+		// Use reflection to determine if we can get the Stats in TC 4.0.x mode or 4.5.x mode
+		try {
+			
+			Method mSetTestNumber = options.getClass().getDeclaredMethod("setMaxNumberOfTestsStacktracesToLoad", Integer.TYPE);
+			mSetTestNumber.invoke(options.getClass(), this.maxTestsToLoad);
+			
+			Method mLoadErrors = options.getClass().getDeclaredMethod("setLoadCompilationErrors", Boolean.TYPE);
+			mLoadErrors.invoke(options.getClass(), false);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this.sRunningBuild.getBuildStatistics(options);
+		
+	}
+	
 	public List<TestBlockBean> getTests() {
 		return this.shortStats.getFailedTests();
 	}
@@ -40,10 +56,6 @@ public class PrettyEmailContentBuilder {
 				true);
 	}
 	
-	public List<BuildProblem> getBuildProblems(){
-		return sRunningBuild.getBuildProblems();
-	}
-
 	public int getFailedTestCount(){
 		return shortStats.getFailedTestCount();
 	}

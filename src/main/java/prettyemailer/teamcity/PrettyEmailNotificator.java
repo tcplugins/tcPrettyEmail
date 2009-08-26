@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.mail.MessagingException;
 
 import jetbrains.buildServer.Build;
-import jetbrains.buildServer.Used;
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.notification.Notificator;
 import jetbrains.buildServer.notification.NotificatorRegistry;
