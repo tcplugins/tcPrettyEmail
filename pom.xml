@@ -68,36 +68,7 @@
 			<scope>compile</scope>
 		</dependency>
 		
-		<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
-		<dependency>
-			<groupId>com.jetbrains.teamcity</groupId>
-			<artifactId>server-api</artifactId>
-			<version>4.0.2</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
-		<dependency>
-			<groupId>com.jetbrains.teamcity</groupId>
-			<artifactId>runtime-util</artifactId>
-			<version>4.0.2</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<!-- TeamCity/webapps/WEB-INF/lib/server-model.jar -->
-		<!--
-			<dependency> <groupId>com.jetbrains.teamcity</groupId>
-			<artifactId>model</artifactId> <version>4.0.2</version>
-			<scope>provided</scope> </dependency>
-		-->
-
-		<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
-		<dependency>
-			<groupId>com.jetbrains.teamcity</groupId>
-			<artifactId>common-api</artifactId>
-			<version>4.0.2</version>
-			<scope>compile</scope>
-		</dependency>
+		<!--  TC Libs are now specified in the profiles below. -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -134,15 +105,6 @@
 			<scope>compile</scope>
 		</dependency>
 
-
-<!-- 
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5</version>
-			<scope>runtime</scope>
-		</dependency>
- -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -151,5 +113,128 @@
 		</dependency>
 
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>tc-default</id>
+			<activation>
+      			<activeByDefault>true</activeByDefault>
+    		</activation>
+			<dependencies>	
+					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>server-api</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>runtime-util</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>common-api</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>tc-4.0.2</id>
+			<dependencies>	
+					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>server-api</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>runtime-util</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>common-api</artifactId>
+						<version>4.0.2</version>
+						<scope>compile</scope>
+					</dependency>
+			</dependencies>
+		</profile>
+
+
+		<profile>
+			<id>tc-4.5.3</id>
+			<dependencies>	
+					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>server-api</artifactId>
+						<version>4.5.3</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>runtime-util</artifactId>
+						<version>4.5.3</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>common-api</artifactId>
+						<version>4.5.3</version>
+						<scope>compile</scope>
+					</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>tc-4.5.4</id>
+			<dependencies>	
+					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>server-api</artifactId>
+						<version>4.5.4</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>runtime-util</artifactId>
+						<version>4.5.4</version>
+						<scope>compile</scope>
+					</dependency>
+			
+					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>common-api</artifactId>
+						<version>4.5.4</version>
+						<scope>compile</scope>
+					</dependency>
+			</dependencies>
+		</profile>
+
+	</profiles>
 
 </project>
