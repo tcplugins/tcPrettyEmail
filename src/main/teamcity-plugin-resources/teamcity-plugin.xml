@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamcity-plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="urn:shemas-jetbrains-com:teamcity-plugin-v1-xml">
+  <info>
+    <name>tcPrettyEmailer</name>
+    <display-name>Pretty Email plugin</display-name>
+    <version>1.0.0</version>
+    <description>TeamCity Pretty Email plugin</description>
+  </info>
+  <deployment use-separate-classloader="false"/>
+</teamcity-plugin>

@@ -27,22 +27,62 @@
 					org.apache.maven.plugins ...which is assumed by default.
 				-->
 				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
+
+			<executions>
+			  <execution>
+			  	<id>make-assembly</id>
+           		<phase>package</phase>
+           		<goals>
+              		<goal>single</goal> <!-- goals == mojos -->
+            	</goals>
+
+           		<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
+					</descriptorRefs>				
 				</configuration>
-				        <executions>
+              </execution>
+            </executions>
+			</plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
           <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- append to the packaging phase. -->
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+				<echo message="Attempting to build dist zip file" />
+				<mkdir dir="${project.build.directory}/dist" />
+				<mkdir dir="${project.build.directory}/dist/server" />
+				
+				<echo message=" - Copying resources to dist" />
+				<copy todir="${project.build.directory}/dist/">
+					<fileset dir="${basedir}/src/main/teamcity-plugin-resources/" />
+				</copy> 
+
+				<echo message=" - Copying dep jar to dist/server" />
+				<copy todir="${project.build.directory}/dist/server/">
+					  <fileset dir="${project.build.directory}/">
+    						<include name="*-jar-with-dependencies.jar" />
+    				  </fileset>
+    			</copy>
+    			
+    			<echo message=" - Creating ZIP file" />
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin.zip" 
+    				 basedir="${project.build.directory}/dist"
+    			 />
+
+               </tasks>
+            </configuration>
             <goals>
-              <goal>single</goal> <!-- goals == mojos -->
+              <goal>run</goal>
             </goals>
           </execution>
         </executions>
-				
-			</plugin>
+      </plugin>
+
+
 		</plugins>
 	</build>
 
@@ -65,7 +105,7 @@
 			<groupId>org.jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		
 		<!--  TC Libs are now specified in the profiles below. -->
@@ -74,21 +114,21 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
 			<version>2.0.1</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.intellij</groupId>
 			<artifactId>openapi</artifactId>
 			<version>6.0.5</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -102,14 +142,14 @@
 			<groupId>velocity</groupId>
 			<artifactId>velocity-dep</artifactId>
 			<version>1.4</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -126,7 +166,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
@@ -134,7 +174,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -142,7 +182,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			</dependencies>
 		</profile>
@@ -155,7 +195,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
@@ -163,7 +203,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -171,7 +211,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
 						<version>4.0.2</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			</dependencies>
 		</profile>
@@ -185,7 +225,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
 						<version>4.5.3</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
@@ -193,7 +233,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
 						<version>4.5.3</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -201,7 +241,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
 						<version>4.5.3</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			</dependencies>
 		</profile>
@@ -214,7 +254,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
 						<version>4.5.4</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
@@ -222,7 +262,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
 						<version>4.5.4</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -230,7 +270,7 @@
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
 						<version>4.5.4</version>
-						<scope>compile</scope>
+						<scope>provided</scope>
 					</dependency>
 			</dependencies>
 		</profile>
