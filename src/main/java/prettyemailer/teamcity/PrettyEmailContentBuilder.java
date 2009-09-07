@@ -1,10 +1,12 @@
 package prettyemailer.teamcity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
@@ -38,10 +40,15 @@ public class PrettyEmailContentBuilder {
 			Method mLoadErrors = options.getClass().getDeclaredMethod("setLoadCompilationErrors", Boolean.TYPE);
 			mLoadErrors.invoke(options.getClass(), false);
 			
-			
-		} catch (Exception e) {
+		} 
+		// Catch a bunch of expected exceptions. Would mean the TC version is less than 4.5.x
+		catch (NoSuchMethodException e){}
+		catch (InvocationTargetException e){}
+		catch (Exception e){
 			e.printStackTrace();
-		}
+		} 
+		
+		
 		return this.sRunningBuild.getBuildStatistics(options);
 		
 	}
@@ -123,9 +130,9 @@ public class PrettyEmailContentBuilder {
 		final StringBuilder sb = new StringBuilder();
 		TimePrinter.createSecondsFormatter(false).formatTime(sb, this.sRunningBuild.getDuration());
 		
-		System.out.println("getStartDate() : " + this.sRunningBuild.getStartDate());
-		System.out.println("getFinishDate() : " + this.sRunningBuild.getFinishDate());
-		System.out.println("Duration() : " + this.sRunningBuild.getDuration());
+		Loggers.SERVER.debug(this.getClass().getSimpleName()  + " :: StartDate : " + this.sRunningBuild.getStartDate());
+		Loggers.SERVER.debug(this.getClass().getSimpleName()  + " :: FinishDate : " + this.sRunningBuild.getFinishDate());
+		Loggers.SERVER.debug(this.getClass().getSimpleName()  + " :: Duration : " + this.sRunningBuild.getDuration());
 		SimpleDateFormat startDateFormat = new SimpleDateFormat("dd MMM yy HH:mm");
 		SimpleDateFormat endDateFormat = new SimpleDateFormat("HH:mm");
 		return startDateFormat.format(this.sRunningBuild.getStartDate())
