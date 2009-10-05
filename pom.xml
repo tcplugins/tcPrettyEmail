@@ -88,8 +88,8 @@
 
 	<repositories>
      <repository>
-      <id>tcwebhooks.sourceforge</id>
-      <url>http://tcwebhooks.svn.sourceforge.net/svnroot/tcwebhooks/maven2-repo</url>
+      <id>tcplugins.sourceforge</id>
+      <url>http://tcplugins.svn.sourceforge.net/svnroot/tcplugins/maven2-repo</url>
      </repository>
 	</repositories>
 
