@@ -4,7 +4,7 @@
   <info>
     <name>tcPrettyEmailer</name>
     <display-name>Pretty Email plugin</display-name>
-    <version>1.0.0</version>
+    <version>${version}</version>
     <description>TeamCity Pretty Email plugin</description>
   </info>
   <deployment use-separate-classloader="false"/>

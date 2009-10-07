@@ -126,7 +126,7 @@ public class PrettyEmailNotificator implements Notificator {
 
 	public void notifyBuildProbablyHanging(SRunningBuild sRunningBuild,
 			Set<SUser> sUsers) {
-		doNotifications("BuildProbablyHanging.", sUsers, sRunningBuild);
+		doNotifications("BuildProbablyHanging", sUsers, sRunningBuild);
 	}
 
 	public void notifyResponsibleChanged(SBuildType sBuildType,
