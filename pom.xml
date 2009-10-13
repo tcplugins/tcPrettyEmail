@@ -92,7 +92,7 @@
     			</copy>
     			
     			<echo message=" - Creating ZIP file" />
-    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin.zip" 
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${version}.zip" 
     				 basedir="${project.build.directory}/dist"
     			 />
 
