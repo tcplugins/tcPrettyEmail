@@ -30,16 +30,23 @@ table.heading {
 }
 
 	td.heading a:link, td.heading a:hover, td.heading a:visited {
-		color: #101010;
-		text-decoration:none;
+		  color: #101010;
+	}
+	
+	td.heading a:link, td.heading a:visited {
+	  text-decoration:none;
+	}
+	
+	td.heading a:hover {
+	  text-decoration:underline;
 	}
 
 	td.name { width:20%; }
 	td.value{ width:38%; }
 	td.valueWide ( width:76%; }
 	td {
-		padding:0.25em;
-		font-size:85%;
+		  padding:0.25em;
+		  font-size:85%;
 	}
 
 	tr.changes td {
@@ -53,10 +60,6 @@ tr.changetop {
 dd {
   margin-bottom: 0.5em;
   font-family:monospace;
-/*
-  font-size:110%;
-  line-height:1.2em;
-  */
 }
 
 </style></head>
@@ -68,7 +71,8 @@ dd {
   <tr class=heading>
     <td class=heading>&nbsp;<img src='cid:buildState000'>&nbsp;
      <a href="$info.rootURL/project.html?projectId=$info.projectId">$info.projectName</a> - 
-     <a href="$info.rootURL/viewType.html?buildTypeId=$info.buildTypeId">$info.buildTypeName</a>
+     <a href="$info.rootURL/viewType.html?buildTypeId=$info.buildTypeId">$info.buildTypeName</a> - 
+     <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId"># $info.buildNumber</a>
    </td>
   </tr>
   <tr class="heading">

@@ -102,6 +102,10 @@ public class PrettyEmailContentBuilder {
 		return this.sRunningBuild.getBuildNumber();
 	}
 	
+	public Long getBuildId(){
+		return this.sRunningBuild.getBuildId();
+	}
+
 	public String getTriggeredBy(){
 		return this.sRunningBuild.getTriggeredBy().getAsString();
 	}
