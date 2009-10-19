@@ -177,7 +177,7 @@ public class PrettyEmailNotificator implements Notificator {
 			PrettyEmailNotificator.mailSender.setPassword(myConfig.getSmtpPassword());
 		}
 		
-		PrettyEmailContentBuilder content = new PrettyEmailContentBuilder(sRunningBuild, server, myConfig.getMaxTestsToShow());
+		PrettyEmailContentBuilder content = new PrettyEmailContentBuilder(sRunningBuild, server, myConfig.getMaxTestsToShow(), myConfig.getMaxErrorLinesToShow());
 		
 		try {
 

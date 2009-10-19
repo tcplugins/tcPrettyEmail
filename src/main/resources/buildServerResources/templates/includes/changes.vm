@@ -10,11 +10,14 @@
         <tr><td colspan=4>There are no changes since the last successful build</td></tr>
 	#else
 	<table width=95% class="heading">
-  <tr class=heading>
-    <td class=heading>Changes - There are $changeCount changes since the last successful build</td>
+  <tr class="heading">
+    <td class="heading">Changes - There are $changeCount changes since the last successful build</td>
+    <td class="heading-link">
+     	 <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId&tab=buildChangesDiv">View changes in TeamCity</a>
+    </td>    
   </tr>
   <tr class="heading">
-    <td class="heading">
+    <td class="heading" colspan=2>
       <table width=100%>
       <tr class="changes"><td>User</td><td colspan=2>Description</td><td>Revision</td></tr>
 	#end

@@ -13,6 +13,9 @@ public class PrettyEmailMainConfig {
 	private String templatePath = null;
 	private String attachmentPath = null;
 	private Integer maxTestsToShow = 5;
+	public final Integer defaultMaxTestsToShow = maxTestsToShow;
+	private Integer maxErrorLinesToShow = 50;
+	public final Integer defaultMaxErrorLinesToShow = maxErrorLinesToShow;
 	private boolean attachImages = true;
 	
 
@@ -55,9 +58,6 @@ public class PrettyEmailMainConfig {
 		}
 		
 		/*
-		  <!-- NOTE: This path is only read on TC startup, due to single 
-		  		instance of the Velocity Engine which is initialised 
-		  		in the Notifier register function. --> 
 		  <template-path path="/opt/TeamCity/prettyEmail/templates" />
 		 */
 
@@ -74,9 +74,6 @@ public class PrettyEmailMainConfig {
 		}
 
 		/*
-		  <!-- NOTE: This path is only read on TC startup, due to single 
-		  		instance of the Velocity Engine which is initialised 
-		  		in the Notifier register function. --> 
 		  <attachment-path path="/opt/TeamCity/prettyEmail/attachments/img" />
 		 */
 		
@@ -88,10 +85,7 @@ public class PrettyEmailMainConfig {
 
 	public Element getAttachImagesAsElement(){
 		/*
-		  <!-- NOTE: This path is only read on TC startup, due to single 
-		  		instance of the Velocity Engine which is initialised 
-		  		in the Notifier register function. --> 
-		  <attachment-path path="/opt/TeamCity/prettyEmail/attachments/img" />
+		  <attach-images attach="/opt/TeamCity/prettyEmail/attachments/img" />
 		 */
 		
 		Element el = new Element("attach-images");
@@ -99,6 +93,29 @@ public class PrettyEmailMainConfig {
 			
 		return el;
 	}
+	
+	public Element getMaxTestToShowAsElement(){
+		/*
+		  <max-tests-to-show value="5" />
+		 */
+		
+		Element el = new Element("max-tests-to-show");
+			el.setAttribute("value", Integer.toString(this.maxTestsToShow));
+			
+		return el;
+	}
+
+	public Element getMaxErrorLinesToShowAsElement(){
+		/*
+		  <max-error-lines-to-show value="50" />
+		 */
+		
+		Element el = new Element("max-error-lines-to-show");
+			el.setAttribute("value", Integer.toString(this.maxErrorLinesToShow));
+			
+		return el;
+	}
+	
 	
 	public Integer getSmtpPort() {
 		return this.smtpPort;
@@ -120,16 +137,16 @@ public class PrettyEmailMainConfig {
 		return smtpUsername;
 	}
 
-	public void setSmtpUsername(String proxyUsername) {
-		this.smtpUsername = proxyUsername;
+	public void setSmtpUsername(String smtpUsername) {
+		this.smtpUsername = smtpUsername;
 	}
 
 	public String getSmtpPassword() {
 		return smtpPassword;
 	}
 
-	public void setSmtpPassword(String proxyPassword) {
-		this.smtpPassword = proxyPassword;
+	public void setSmtpPassword(String smtpPassword) {
+		this.smtpPassword = smtpPassword;
 	}
 
 	public String getFromAddress() {
@@ -170,6 +187,14 @@ public class PrettyEmailMainConfig {
 
 	public void setMaxTestsToShow(Integer maxTestsToShow) {
 		this.maxTestsToShow = maxTestsToShow;
+	}
+
+	public Integer getMaxErrorLinesToShow() {
+		return maxErrorLinesToShow;
+	}
+
+	public void setMaxErrorLinesToShow(Integer maxErrorLinesToShow) {
+		this.maxErrorLinesToShow = maxErrorLinesToShow;
 	}
 
 	public boolean getAttachImages() {

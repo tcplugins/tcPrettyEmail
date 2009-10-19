@@ -1,5 +1,6 @@
 #set( $buildStateLong = $info.status)
 #parse( "includes/header.vm" )
+#parse( "includes/errors.vm" )
 			#parse( "includes/tests.vm" )
-			#parse( "includes/changes.vm" )
+						#parse( "includes/changes.vm" )
 #parse( "includes/footer.vm" )

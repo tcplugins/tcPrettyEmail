@@ -22,9 +22,12 @@ $info.getIgnoredTestCount() ignored
     (Only first $info.getMaxTestCount() failed tests shown)
   #end
     </td>
+    <td class="heading-link">
+     	 <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId&tab=testsInfo">View tests in TeamCity</a>
+    </td>
   </tr>
   <tr class="heading">
-    <td class="heading">
+    <td class="heading" colspan=2>
       <table width=100%>
         <tr><td colspan=4>
 			  #if( $info.getFailedTestCount() > $info.getMaxTestCount() )

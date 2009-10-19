@@ -8,6 +8,7 @@ import java.util.List;
 
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
+import jetbrains.buildServer.serverSide.CompilationBlockBean;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.serverSide.ShortStatistics;
@@ -21,11 +22,13 @@ public class PrettyEmailContentBuilder {
 	SBuildServer sBuildServer;
 	ShortStatistics shortStats;
 	int maxTestsToLoad;
+	int maxErrorLinesToLoad;
 
-	public PrettyEmailContentBuilder(SRunningBuild sRunningBuild, SBuildServer server, int maxTestsToLoad) {
+	public PrettyEmailContentBuilder(SRunningBuild sRunningBuild, SBuildServer server, int maxTestsToLoad, int maxErrorLinesToLoad) {
 		this.sRunningBuild = sRunningBuild;
 		this.sBuildServer = server;
 		this.maxTestsToLoad = maxTestsToLoad;
+		this.maxErrorLinesToLoad = maxErrorLinesToLoad;
 		BuildStatisticsOptions options = new BuildStatisticsOptions();
 		this.shortStats = this.getShortStats(options);
 	}
@@ -37,8 +40,18 @@ public class PrettyEmailContentBuilder {
 			Method mSetTestNumber = options.getClass().getDeclaredMethod("setMaxNumberOfTestsStacktracesToLoad", Integer.TYPE);
 			mSetTestNumber.invoke(options.getClass(), this.maxTestsToLoad);
 			
+		} 
+		// Catch a bunch of expected exceptions. Would mean the TC version is less than 4.5.x
+		catch (NoSuchMethodException e){}
+		catch (InvocationTargetException e){}
+		catch (Exception e){
+			e.printStackTrace();
+		} 
+		
+		try {
+			
 			Method mLoadErrors = options.getClass().getDeclaredMethod("setLoadCompilationErrors", Boolean.TYPE);
-			mLoadErrors.invoke(options.getClass(), false);
+			mLoadErrors.invoke(options.getClass(), true);
 			
 		} 
 		// Catch a bunch of expected exceptions. Would mean the TC version is less than 4.5.x
@@ -125,6 +138,16 @@ public class PrettyEmailContentBuilder {
 	public String getStatusLowercase(){
 		return this.getStatus().toLowerCase();
 	}
+	
+	public List<CompilationBlockBean> getCompileErrors() {
+		    List<CompilationBlockBean> tempList = this.sRunningBuild.getFullStatistics().getCompilationErrorBlocks();
+		    if (tempList.size() > this.maxErrorLinesToLoad){
+		    	return tempList.subList(tempList.size() - this.maxErrorLinesToLoad, tempList.size());
+		    } else { 
+		    	return tempList;
+			}
+	}
+
 	
 	public String getDate(){
 		Calendar calFinishDate = Calendar.getInstance();

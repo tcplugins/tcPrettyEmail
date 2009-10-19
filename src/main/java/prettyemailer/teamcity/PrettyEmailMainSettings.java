@@ -90,6 +90,22 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
 	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: attach-images " + Boolean.valueOf(attachImagesElement.getAttributeValue("attach")));
 	        	}
 	    	}
+
+	        Element MaxTestsElement = emailElement.getChild("max-tests-to-show");
+	        if(MaxTestsElement != null){
+	        	if (MaxTestsElement.getAttribute("value") != null){
+	        		tempConfig.setMaxTestsToShow(Integer.valueOf(MaxTestsElement.getAttributeValue("value")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: max-tests-to-show " + Integer.valueOf(MaxTestsElement.getAttributeValue("value")));
+	        	}
+	    	}	        
+
+	        Element MaxErrorsElement = emailElement.getChild("max-error-lines-to-show");
+	        if(MaxErrorsElement != null){
+	        	if (MaxErrorsElement.getAttribute("value") != null){
+	        		tempConfig.setMaxErrorLinesToShow(Integer.valueOf(MaxErrorsElement.getAttributeValue("value")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: max-tests-to-show " + Integer.valueOf(MaxErrorsElement.getAttributeValue("value")));
+	        	}
+	    	}	        
 	        
 	    } 
     	
@@ -129,6 +145,19 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
         {
         	el.addContent(prettyEmailMainConfig.getAttachImagesAsElement());
         }
+
+        if (   prettyEmailMainConfig != null 
+        		&& prettyEmailMainConfig.defaultMaxTestsToShow != prettyEmailMainConfig.getMaxTestsToShow())
+        {
+        	el.addContent(prettyEmailMainConfig.getMaxTestToShowAsElement());
+        }
+        
+        if (   prettyEmailMainConfig != null 
+        		&& prettyEmailMainConfig.defaultMaxErrorLinesToShow != prettyEmailMainConfig.getMaxErrorLinesToShow())
+        {
+        	el.addContent(prettyEmailMainConfig.getMaxErrorLinesToShowAsElement());
+        }
+        
         parentElement.addContent(el);
     }
     

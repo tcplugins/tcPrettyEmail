@@ -39,6 +39,7 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 		VelocityContext context = new VelocityContext();
 		context.put("tests", content.getTests());
 		context.put("changes", content.getChanges());
+		context.put("errors", content.getCompileErrors());
 		context.put("info", content);
 		
 		Template emailBodyTemplate = velocityEngine.getTemplate("email-" + reason + ".vm");

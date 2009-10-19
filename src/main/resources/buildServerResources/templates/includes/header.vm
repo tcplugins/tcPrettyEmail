@@ -40,6 +40,11 @@ table.heading {
 	td.heading a:hover {
 	  text-decoration:underline;
 	}
+	
+	td.heading-link {
+	  text-align: right;
+	  font-weight: bold;
+	}
 
 	td.name { width:20%; }
 	td.value{ width:38%; }
@@ -60,6 +65,20 @@ tr.changetop {
 dd {
   margin-bottom: 0.5em;
   font-family:monospace;
+}
+
+.compiler-error {
+  color:#D00000;
+  /* display:inline; */
+  font-family:monospace;
+  white-space:normal;
+}
+
+ul.compile {
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  display: block;
 }
 
 </style></head>

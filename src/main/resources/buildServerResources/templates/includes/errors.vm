@@ -1,0 +1,29 @@
+
+<table width=95% class="heading">
+  <tr class="heading">
+    <td class="heading">Compilation Errors</td>
+    <td class="heading-link">
+     	 View build output: <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId&tab=buildLog">short</a>
+     	  | <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId&tab=buildLog&all=true">long</a>
+    </td>
+  </tr>
+  <tr class="heading">
+    <td class="heading" colspan=2>
+#if ($errors.size() == 0)
+      <table width=100%>
+        <tr><td colspan=4>
+        None
+#else
+      <table width=100%>
+        <tr><td colspan=4>
+                          <ul class="compile">
+    #foreach( $error in $errors )
+      <li class="compiler-error">$error.getCompilerMessageForWeb()</li>
+    #end
+  </dl>
+#end
+                </td></tr>
+      </table>
+            </td>
+          </tr>
+        </table>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+  <pretty-email>
+    <smtp host="mail" from-address="foobar@example.com" from-name="Foo Bar" />
+  </pretty-email>
+</server>

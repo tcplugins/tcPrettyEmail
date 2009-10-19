@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+  <pretty-email>
+    <smtp host="mail" port="25" from-address="foobar@example.com" from-name="Foo Bar" username="foobar" password="barfoo" />
+    <template-path path="/opt/Foo/Bar/templates" />
+    <attachment-path path="/opt/Foo/Bar/attachments" />
+    <attach-images attach="true" />
+    <max-tests-to-show value="5" />
+    <max-error-lines-to-show value="100" />
+  </pretty-email>
+</server>
