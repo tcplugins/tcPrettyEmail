@@ -4,7 +4,7 @@
 	<groupId>netwolfuk.TeamCity.Plugins</groupId>
 	<artifactId>tcPrettyEmail</artifactId>
 	<name>tcPrettyEmail</name>
-	<version>0.5.${build.number}.${build.vcs.number}</version>
+	<version>0.6.${build.number}.${build.vcs.number}</version>
 	<description>A pretty emailer for TeamCity</description>
 	<build>
 		<defaultGoal>package</defaultGoal>
