@@ -81,7 +81,9 @@
 				
 				<echo message=" - Copying resources to dist" />
 				<copy todir="${project.build.directory}/dist/">
-					<fileset dir="${basedir}/src/main/teamcity-plugin-resources/" />
+					<fileset dir="${project.build.directory}/classes/">
+						<include name="teamcity-plugin.xml"/>
+					</fileset>
 				</copy> 
 
 				<echo message=" - Copying dep jar to dist/server" />
