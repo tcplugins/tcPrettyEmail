@@ -213,13 +213,13 @@
 		</profile>
 
 		<profile>
-			<id>tc-4.0.2</id>
+			<id>tc-5.0.1</id>
 			<dependencies>	
 					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
-						<version>4.0.2</version>
+						<version>5.0.1</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -227,7 +227,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
-						<version>4.0.2</version>
+						<version>5.0.1</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -235,7 +235,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
-						<version>4.0.2</version>
+						<version>5.0.1</version>
 						<scope>provided</scope>
 					</dependency>
 			</dependencies>
@@ -243,13 +243,13 @@
 
 
 		<profile>
-			<id>tc-4.5.3</id>
+			<id>tc-4.5.6</id>
 			<dependencies>	
 					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
-						<version>4.5.3</version>
+						<version>4.5.6</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -257,7 +257,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
-						<version>4.5.3</version>
+						<version>4.5.6</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -265,7 +265,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
-						<version>4.5.3</version>
+						<version>4.5.6</version>
 						<scope>provided</scope>
 					</dependency>
 			</dependencies>
