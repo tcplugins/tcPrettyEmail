@@ -9,8 +9,10 @@ import jetbrains.buildServer.Build;
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.notification.Notificator;
 import jetbrains.buildServer.notification.NotificatorRegistry;
+import jetbrains.buildServer.responsibility.TestNameResponsibilityEntry;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SBuildType;
+import jetbrains.buildServer.serverSide.SProject;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
@@ -131,10 +133,23 @@ public class PrettyEmailNotificator implements Notificator {
 
 	public void notifyResponsibleChanged(SBuildType sBuildType,
 			Set<SUser> sUsers) {
-		// doNotifications("Responsibility of build " + sBuildType.getFullName()
-		// + " changed.",sUsers, sRunningBuild);
+		// TODO Auto-generated method stub
 	}
 
+	public void notifyResponsibleAssigned(SBuildType arg0, Set<SUser> arg1) {
+		// TODO Auto-generated method stub
+	}
+
+	public void notifyResponsibleAssigned(TestNameResponsibilityEntry arg0,
+			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+	}
+
+	public void notifyResponsibleChanged(TestNameResponsibilityEntry arg0,
+			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+	}	
+	
 	public String getNotificatorType() {
 		return TYPE;
 	}
@@ -237,4 +252,5 @@ public class PrettyEmailNotificator implements Notificator {
 			e.printStackTrace();
 		}
 	}
+
 }
