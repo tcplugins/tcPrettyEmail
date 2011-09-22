@@ -11,8 +11,9 @@ import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
 import jetbrains.buildServer.serverSide.CompilationBlockBean;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
+import jetbrains.buildServer.serverSide.STestRun;
 import jetbrains.buildServer.serverSide.ShortStatistics;
-import jetbrains.buildServer.serverSide.TestBlockBean;
+//import jetbrains.buildServer.serverSide.TestBlockBean;
 import jetbrains.buildServer.util.TimePrinter;
 import jetbrains.buildServer.vcs.SVcsModification;
 import jetbrains.buildServer.vcs.SelectPrevBuildPolicy;
@@ -66,8 +67,8 @@ public class PrettyEmailContentBuilder {
 		
 	}
 	
-	public List<TestBlockBean> getTests() {
-		return this.shortStats.getFailedTests();
+	public List<PrettyEmailTestBlockBean> getTests() {
+		return PrettyEmailTestBlockBeanWrapper.wrap(this.shortStats.getFailedTests());
 	}
 	
 	public List<SVcsModification> getChanges(){

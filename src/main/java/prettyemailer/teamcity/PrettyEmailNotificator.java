@@ -1,6 +1,7 @@
 package prettyemailer.teamcity;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.mail.MessagingException;
@@ -9,11 +10,15 @@ import jetbrains.buildServer.Build;
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.notification.Notificator;
 import jetbrains.buildServer.notification.NotificatorRegistry;
+import jetbrains.buildServer.responsibility.ResponsibilityEntry;
 import jetbrains.buildServer.responsibility.TestNameResponsibilityEntry;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SBuildType;
 import jetbrains.buildServer.serverSide.SProject;
 import jetbrains.buildServer.serverSide.SRunningBuild;
+import jetbrains.buildServer.serverSide.STest;
+import jetbrains.buildServer.serverSide.mute.MuteInfo;
+import jetbrains.buildServer.tests.TestName;
 import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
 
@@ -251,6 +256,35 @@ public class PrettyEmailNotificator implements Notificator {
 			Loggers.SERVER.debug(e);
 			e.printStackTrace();
 		}
+	}
+
+	public void notifyBuildFailedToStart(SRunningBuild arg0, Set<SUser> arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyResponsibleAssigned(Collection<TestName> arg0,
+			ResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyResponsibleChanged(Collection<TestName> arg0,
+			ResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyTestsMuted(Collection<STest> arg0, MuteInfo arg1,
+			Set<SUser> arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1,
+			Set<SUser> arg2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -176,18 +176,29 @@
 			<version>1.4</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.16</version>
+		    <scope>test</scope>
+		</dependency>
 
+		
 	</dependencies>
 
 	<profiles>
 		<profile>
 			<id>tc-default</id>
+			<activation>
+      			<activeByDefault>true</activeByDefault>
+    		</activation>
 			<dependencies>	
 					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
-						<version>4.0.2</version>
+						<version>6.5.2</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -195,25 +206,27 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
-						<version>4.0.2</version>
-						<scope>provided</scope>
+						<version>6.5.2</version>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>common-api</artifactId>
-						<version>4.0.2</version>
-						<scope>provided</scope>
+						<version>4.5.4</version>
+					</dependency>
+					
+					<!-- TeamCity/webapps/WEB-INF/lib/util.jar -->
+					<dependency>
+						<groupId>com.jetbrains.teamcity</groupId>
+						<artifactId>util</artifactId>
+						<version>6.5.2</version>
 					</dependency>
 			</dependencies>
 		</profile>
 
 		<profile>
 			<id>tc-5.0.1</id>
-			<activation>
-      			<activeByDefault>true</activeByDefault>
-    		</activation>
    			<dependencies>	
 					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
 					<dependency>
