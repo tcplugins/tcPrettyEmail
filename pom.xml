@@ -198,7 +198,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>server-api</artifactId>
-						<version>6.5.2</version>
+						<version>6.5.4</version>
 						<scope>provided</scope>
 					</dependency>
 			
@@ -206,7 +206,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>runtime-util</artifactId>
-						<version>6.5.2</version>
+						<version>6.5.4</version>
 					</dependency>
 			
 					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -220,7 +220,7 @@
 					<dependency>
 						<groupId>com.jetbrains.teamcity</groupId>
 						<artifactId>util</artifactId>
-						<version>6.5.2</version>
+						<version>6.5.4</version>
 					</dependency>
 			</dependencies>
 		</profile>
