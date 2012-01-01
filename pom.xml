@@ -97,6 +97,10 @@
     			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${version}.zip" 
     				 basedir="${project.build.directory}/dist"
     			 />
+    			<echo message=" - Creating ZIP template file" />
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${version}-templates.zip" 
+    				 basedir="${project.basedir}/src/main/resources/buildServerResources"
+    			 />
 
                </tasks>
             </configuration>
