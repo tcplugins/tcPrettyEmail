@@ -65,6 +65,11 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
 	        		tempConfig.setFromAddress(smtpElement.getAttributeValue("from-address"));
 	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: from-address " + smtpElement.getAttributeValue("from-address"));
 	        	}
+	        	
+	        	if (smtpElement.getAttribute("starttls-enabled") != null){
+	        		tempConfig.setStartTLSEnabled(Boolean.valueOf(smtpElement.getAttributeValue("starttls-enabled")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: starttls-enabled " + smtpElement.getAttributeValue("starttls-enabled") + " (" + Boolean.getBoolean(smtpElement.getAttributeValue("starttls-enabled")) + ")");
+	        	}
 	        }
 	        
 			Element templatePathElement = emailElement.getChild("template-path");
@@ -87,7 +92,7 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
 	        if(attachImagesElement != null){
 	        	if (attachImagesElement.getAttribute("attach") != null){
 	        		tempConfig.setAttachImages(Boolean.valueOf(attachImagesElement.getAttributeValue("attach")));
-	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: attach-images " + Boolean.valueOf(attachImagesElement.getAttributeValue("attach")));
+	        		Loggers.SERVER.debug(this.getClass().getSimpleName() + ":readFrom :: attach-images " + tempConfig.getAttachImages());
 	        	}
 	    	}
 

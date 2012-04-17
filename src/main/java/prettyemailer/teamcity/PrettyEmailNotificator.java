@@ -190,6 +190,7 @@ public class PrettyEmailNotificator implements Notificator {
 		
 		PrettyEmailNotificator.mailSender.setHost(myConfig.getSmtpHost());
 		PrettyEmailNotificator.mailSender.setPort(myConfig.getSmtpPort());
+		PrettyEmailNotificator.mailSender.setJavaMailProperties(myConfig.getMailProperties());
 		if (myConfig.getSmtpUsername() != null){
 			PrettyEmailNotificator.mailSender.setUsername(myConfig.getSmtpUsername());
 		}
@@ -245,6 +246,7 @@ public class PrettyEmailNotificator implements Notificator {
 			Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: host        : " + myConfig.getSmtpHost());
 			Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: port        : " + myConfig.getSmtpPort());
 			Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: username    : " + myConfig.getSmtpUsername());
+			Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: starttls-enabled: " + myConfig.getStartTLSEnabled());
 			if (myConfig.getSmtpPassword() != null){
 				Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: password    : HIDDEN");
 			} else {

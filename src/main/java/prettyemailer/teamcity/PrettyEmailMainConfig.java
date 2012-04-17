@@ -1,5 +1,7 @@
 package prettyemailer.teamcity;
 
+import java.util.Properties;
+
 import org.jdom.Element;
 
 public class PrettyEmailMainConfig {
@@ -9,6 +11,7 @@ public class PrettyEmailMainConfig {
 	private String smtpPassword = null;
 	private String fromAddress = null;
 	private String fromName = null;
+	private boolean starttlsEnabled = false;
 	
 	private String templatePath = null;
 	private String attachmentPath = null;
@@ -33,6 +36,7 @@ public class PrettyEmailMainConfig {
 		Element el = new Element("smtp");
 		el.setAttribute("host", this.getSmtpHost());
 		el.setAttribute("port", String.valueOf(this.getSmtpPort()));
+		el.setAttribute("starttls-enabled", String.valueOf(this.getStartTLSEnabled()));
 		if (   this.smtpPassword != null && this.smtpPassword.length() > 0 
 			&& this.smtpUsername != null && this.smtpUsername.length() > 0 )
 		{
@@ -148,6 +152,14 @@ public class PrettyEmailMainConfig {
 	public void setSmtpPassword(String smtpPassword) {
 		this.smtpPassword = smtpPassword;
 	}
+	
+	public boolean getStartTLSEnabled() {
+		return starttlsEnabled;
+	}
+	
+	public void setStartTLSEnabled(boolean starttslenabled) {
+		this.starttlsEnabled = starttslenabled;
+	}
 
 	public String getFromAddress() {
 		return fromAddress;
@@ -203,5 +215,11 @@ public class PrettyEmailMainConfig {
 
 	public void setAttachImages(boolean attachImages) {
 		this.attachImages = attachImages;
+	}
+
+	public Properties getMailProperties() {
+		final Properties props = new Properties();
+		props.setProperty("mail.smtp.starttls.enable", String.valueOf(this.starttlsEnabled));
+		return props;
 	}
 }
