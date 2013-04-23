@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
 import jetbrains.buildServer.serverSide.CompilationBlockBean;
 import jetbrains.buildServer.serverSide.SBuildServer;
@@ -39,7 +38,7 @@ public class PrettyEmailContentBuilder {
 		try {
 			
 			Method mSetTestNumber = options.getClass().getDeclaredMethod("setMaxNumberOfTestsStacktracesToLoad", Integer.TYPE);
-			mSetTestNumber.invoke(options.getClass(), this.maxTestsToLoad);
+			mSetTestNumber.invoke(options, this.maxTestsToLoad);
 			
 		} 
 		// Catch a bunch of expected exceptions. Would mean the TC version is less than 4.5.x
@@ -52,7 +51,7 @@ public class PrettyEmailContentBuilder {
 		try {
 			
 			Method mLoadErrors = options.getClass().getDeclaredMethod("setLoadCompilationErrors", Boolean.TYPE);
-			mLoadErrors.invoke(options.getClass(), true);
+			mLoadErrors.invoke(options, true);
 			
 		} 
 		// Catch a bunch of expected exceptions. Would mean the TC version is less than 4.5.x

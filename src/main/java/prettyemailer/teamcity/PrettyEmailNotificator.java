@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.mail.MessagingException;
 
 import jetbrains.buildServer.Build;
-import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.notification.Notificator;
 import jetbrains.buildServer.notification.NotificatorRegistry;
 import jetbrains.buildServer.responsibility.ResponsibilityEntry;
@@ -106,54 +105,7 @@ public class PrettyEmailNotificator implements Notificator {
 
 	}
 	
-	public void notifyBuildStarted(SRunningBuild sRunningBuild,
-			Set<SUser> sUsers) {
-		doNotifications("BuildStarted", sUsers, sRunningBuild);
-	}
 
-	public void notifyBuildSuccessful(SRunningBuild sRunningBuild,
-			Set<SUser> sUsers) {
-		doNotifications("BuildSuccessful", sUsers, sRunningBuild);
-	}
-
-	public void notifyBuildFailed(SRunningBuild sRunningBuild, Set<SUser> sUsers) {
-		doNotifications("BuildFailed", sUsers, sRunningBuild);
-	}
-
-	public void notifyLabelingFailed(Build build,
-			jetbrains.buildServer.vcs.VcsRoot vcsRoot, Throwable throwable,
-			Set<SUser> sUsers) {
-		// doNotifications("LabelingFailed" ,sUsers, sRunningBuild);
-	}
-
-	public void notifyBuildFailing(SRunningBuild sRunningBuild,
-			Set<SUser> sUsers) {
-		doNotifications("BuildFailing", sUsers, sRunningBuild);
-	}
-
-	public void notifyBuildProbablyHanging(SRunningBuild sRunningBuild,
-			Set<SUser> sUsers) {
-		doNotifications("BuildProbablyHanging", sUsers, sRunningBuild);
-	}
-
-	public void notifyResponsibleChanged(SBuildType sBuildType,
-			Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleAssigned(SBuildType arg0, Set<SUser> arg1) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleAssigned(TestNameResponsibilityEntry arg0,
-			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleChanged(TestNameResponsibilityEntry arg0,
-			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
-		// TODO Auto-generated method stub
-	}	
 	
 	public String getNotificatorType() {
 		return TYPE;
@@ -222,16 +174,21 @@ public class PrettyEmailNotificator implements Notificator {
 
 
 			for (SUser user : sUsers) {
+				if (user.getEmail() == null || user.getEmail() == ""){
+					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Invalid Email address for " + user.getUsername().toString() + " (" + user.getEmail().toString() + ")");
+					continue;
+				}
+				
 				Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: Sending " + reason + " pretty email for " + sRunningBuild.getBuildTypeId() + " to " + user.getEmail());
 				try {
 					helper.setTo(user.getEmail());
 				} catch (MessagingException mEx){
-					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Invalid Email address for " + user.getEmail());
+					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Invalid Email address for " + user.getUsername() + " (" + user.getEmail() + ")");
 				}
 				try {
 					PrettyEmailNotificator.mailSender.send(helper.getMimeMessage());
 				} catch (MailException mEx){
-					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Could not send email to " + user.getEmail() + " See DEBUG output and/or STDOUT for Stacktrace");
+					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Could not send email to " + user.getUsername() + " (" + user.getEmail() + ")" + " See DEBUG output and/or STDOUT for Stacktrace");
 					Loggers.SERVER.debug(mEx);
 					mEx.printStackTrace();				
 				}
@@ -260,31 +217,79 @@ public class PrettyEmailNotificator implements Notificator {
 		}
 	}
 
-	public void notifyBuildFailedToStart(SRunningBuild arg0, Set<SUser> arg1) {
+	
+	public void notifyBuildStarted(SRunningBuild sRunningBuild,
+			Set<SUser> sUsers) {
+		doNotifications("BuildStarted", sUsers, sRunningBuild);
+	}
+
+	public void notifyBuildSuccessful(SRunningBuild sRunningBuild,
+			Set<SUser> sUsers) {
+		doNotifications("BuildSuccessful", sUsers, sRunningBuild);
+	}
+
+	public void notifyBuildFailed(SRunningBuild sRunningBuild, Set<SUser> sUsers) {
+		doNotifications("BuildFailed", sUsers, sRunningBuild);
+	}
+
+	public void notifyLabelingFailed(Build build,
+			jetbrains.buildServer.vcs.VcsRoot vcsRoot, Throwable throwable, Set<SUser> sUsers) {
+		// doNotifications("LabelingFailed" ,sUsers, sRunningBuild);
+	}
+
+	public void notifyBuildFailing(SRunningBuild sRunningBuild,	Set<SUser> sUsers) {
+		doNotifications("BuildFailing", sUsers, sRunningBuild);
+	}
+
+	public void notifyBuildProbablyHanging(SRunningBuild sRunningBuild, Set<SUser> sUsers) {
+		doNotifications("BuildProbablyHanging", sUsers, sRunningBuild);
+	}
+
+	public void notifyResponsibleChanged(SBuildType sBuildType, Set<SUser> sUsers) {
+		// TODO Auto-generated method stub
+	}
+
+	public void notifyResponsibleAssigned(SBuildType sBuildType, Set<SUser> sUsers) {
+		// TODO Auto-generated method stub
+	}
+
+	public void notifyResponsibleAssigned(TestNameResponsibilityEntry arg0,
+			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
+		// TODO Auto-generated method stub
+	}
+
+	public void notifyResponsibleChanged(TestNameResponsibilityEntry arg0,
+			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
+		// TODO Auto-generated method stub
+	}	
+	
+	
+	public void notifyBuildFailedToStart(SRunningBuild arg0, Set<SUser> sUsers) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void notifyResponsibleAssigned(Collection<TestName> arg0,
-			ResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+	public void notifyResponsibleAssigned(Collection<TestName> arg0, ResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void notifyResponsibleChanged(Collection<TestName> arg0,
-			ResponsibilityEntry arg1, SProject arg2, Set<SUser> arg3) {
+	public void notifyResponsibleChanged(Collection<TestName> arg0, ResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void notifyTestsMuted(Collection<STest> arg0, MuteInfo arg1,
-			Set<SUser> arg2) {
+	public void notifyTestsMuted(Collection<STest> arg0, MuteInfo arg1, Set<SUser> sUsers) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1,
-			Set<SUser> arg2) {
+	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1, Set<SUser> sUsers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1, SUser arg2, Set<SUser> sUsers) {
 		// TODO Auto-generated method stub
 		
 	}
