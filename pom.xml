@@ -4,13 +4,18 @@
 	<groupId>netwolfuk.TeamCity.Plugins</groupId>
 	<artifactId>tcPrettyEmail</artifactId>
 	<name>tcPrettyEmail</name>
-	<version>0.9.${build.number}.${build.vcs.number}</version>
-	<description>A pretty emailer for TeamCity</description>
 	
 	<properties>
+    	<majorVersion>0.9</majorVersion>
+    	<minorVersion>snapshot</minorVersion>
+    	<currentVersion>${majorVersion}.${minorVersion}</currentVersion>
     	<!-- Set the TeamCity version, so that we reference these jars in Maven -->
     	<teamcityVersion>9.1.6</teamcityVersion>
-	</properties>	
+	</properties>
+		
+	<version>${currentVersion}</version>
+	<description>A pretty emailer for TeamCity</description>
+	
 	<build>
 		<defaultGoal>package</defaultGoal>
 		
@@ -99,11 +104,11 @@
     			</copy>
     			
     			<echo message=" - Creating ZIP file" />
-    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${version}.zip" 
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${currentVersion}.zip" 
     				 basedir="${project.build.directory}/dist"
     			 />
     			<echo message=" - Creating ZIP template file" />
-    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${version}-templates.zip" 
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${currentVersion}-templates.zip" 
     				 basedir="${project.basedir}/src/main/resources/buildServerResources"
     			 />
 
