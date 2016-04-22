@@ -4,8 +4,13 @@
 	<groupId>netwolfuk.TeamCity.Plugins</groupId>
 	<artifactId>tcPrettyEmail</artifactId>
 	<name>tcPrettyEmail</name>
-	<version>0.8.${build.number}.${build.vcs.number}</version>
+	<version>0.9.${build.number}.${build.vcs.number}</version>
 	<description>A pretty emailer for TeamCity</description>
+	
+	<properties>
+    	<!-- Set the TeamCity version, so that we reference these jars in Maven -->
+    	<teamcityVersion>9.1.6</teamcityVersion>
+	</properties>	
 	<build>
 		<defaultGoal>package</defaultGoal>
 		
@@ -116,10 +121,10 @@
 	</build>
 
 	<repositories>
-     <repository>
-      <id>tcplugins.sourceforge</id>
-      <url>http://tcplugins.svn.sourceforge.net/svnroot/tcplugins/maven2-repo</url>
-     </repository>
+ 	  <repository>
+	    <id>jetbrains-all</id>
+	    <url>http://repository.jetbrains.com/all</url>
+	  </repository>
 	</repositories>
 
 	<dependencies>
@@ -188,138 +193,38 @@
 		    <scope>test</scope>
 		</dependency>
 
+		<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
+		<dependency>
+			<groupId>org.jetbrains.teamcity</groupId>
+			<artifactId>server-api</artifactId>
+			<version>${teamcityVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
+		<!--dependency>
+			<groupId>org.jetbrains.teamcity</groupId>
+			<artifactId>runtime-util</artifactId>
+			<version>${teamcityVersion}</version>
+			<scope>provided</scope>
+		</dependency-->
+
+		<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
+		<dependency>
+			<groupId>org.jetbrains.teamcity</groupId>
+			<artifactId>common-api</artifactId>
+			<version>${teamcityVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- TeamCity/webapps/WEB-INF/lib/util.jar -->
+		<dependency>
+			<groupId>org.jetbrains.teamcity</groupId>
+			<artifactId>util</artifactId>
+			<version>${teamcityVersion}</version>
+			<scope>provided</scope>
+		</dependency>
 		
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>tc-default</id>
-			<activation>
-      			<activeByDefault>true</activeByDefault>
-    		</activation>
-			<dependencies>	
-					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>server-api</artifactId>
-						<version>7.1.0</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>runtime-util</artifactId>
-						<version>7.1.0</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>common-api</artifactId>
-						<version>7.1.0</version>
-						<scope>provided</scope>
-					</dependency>
-					
-					<!-- TeamCity/webapps/WEB-INF/lib/util.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>util</artifactId>
-						<version>7.1.0</version>
-						<scope>provided</scope>
-					</dependency>
-			</dependencies>
-		</profile>
-
-		<profile>
-			<id>tc-5.0.1</id>
-   			<dependencies>	
-					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>server-api</artifactId>
-						<version>5.0.1</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>runtime-util</artifactId>
-						<version>5.0.1</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>common-api</artifactId>
-						<version>5.0.1</version>
-						<scope>provided</scope>
-					</dependency>
-			</dependencies>
-		</profile>
-
-
-		<profile>
-			<id>tc-4.5.6</id>
-			<dependencies>	
-					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>server-api</artifactId>
-						<version>4.5.6</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>runtime-util</artifactId>
-						<version>4.5.6</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>common-api</artifactId>
-						<version>4.5.6</version>
-						<scope>provided</scope>
-					</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
-			<id>tc-4.5.4</id>
-			<dependencies>	
-					<!-- TeamCity/webapps/WEB-INF/lib/server-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>server-api</artifactId>
-						<version>4.5.4</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/runtime-util.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>runtime-util</artifactId>
-						<version>4.5.4</version>
-						<scope>provided</scope>
-					</dependency>
-			
-					<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
-					<dependency>
-						<groupId>com.jetbrains.teamcity</groupId>
-						<artifactId>common-api</artifactId>
-						<version>4.5.4</version>
-						<scope>provided</scope>
-					</dependency>
-			</dependencies>
-		</profile>
-
-	</profiles>
 
 </project>

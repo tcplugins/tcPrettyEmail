@@ -17,6 +17,7 @@ import jetbrains.buildServer.serverSide.SProject;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.serverSide.STest;
 import jetbrains.buildServer.serverSide.mute.MuteInfo;
+import jetbrains.buildServer.serverSide.problems.BuildProblemInfo;
 import jetbrains.buildServer.tests.TestName;
 import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
@@ -293,5 +294,35 @@ public class PrettyEmailNotificator implements Notificator {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void notifyBuildProblemResponsibleAssigned(
+			Collection<BuildProblemInfo> arg0, ResponsibilityEntry arg1,
+			SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyBuildProblemResponsibleChanged(
+			Collection<BuildProblemInfo> arg0, ResponsibilityEntry arg1,
+			SProject arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyBuildProblemsMuted(Collection<BuildProblemInfo> arg0,
+			MuteInfo arg1, Set<SUser> arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyBuildProblemsUnmuted(Collection<BuildProblemInfo> arg0,
+			MuteInfo arg1, SUser arg2, Set<SUser> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	// New methods from TC 9.1.6
+	
+	
 
 }

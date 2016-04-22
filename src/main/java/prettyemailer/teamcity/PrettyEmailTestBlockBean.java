@@ -22,7 +22,15 @@ public class PrettyEmailTestBlockBean {
 	}
 	
 	public String getShortTextForWeb(){
-		return test.getFailureInfo().getShortStacktraceForWeb();
+		
+		try {
+			return test.getFailureInfo().getShortStacktraceForWeb();
+		} 
+		// Catch a null pointer, which means teamcity is version 9.1.6 or higher.
+		catch (NullPointerException npe){
+			return test.getFullText();
+		}
+
 	}
 	
 	public boolean isNew(){
