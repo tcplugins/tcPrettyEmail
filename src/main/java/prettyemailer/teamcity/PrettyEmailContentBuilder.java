@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import jetbrains.buildServer.serverSide.Branch;
 import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
 import jetbrains.buildServer.serverSide.CompilationBlockBean;
 import jetbrains.buildServer.serverSide.SBuildServer;
@@ -21,6 +22,7 @@ public class PrettyEmailContentBuilder {
 	SRunningBuild sRunningBuild;
 	SBuildServer sBuildServer;
 	ShortStatistics shortStats;
+	PrettyEmailBranchImpl branch = null;
 	int maxTestsToLoad;
 	int maxErrorLinesToLoad;
 
@@ -31,6 +33,9 @@ public class PrettyEmailContentBuilder {
 		this.maxErrorLinesToLoad = maxErrorLinesToLoad;
 		BuildStatisticsOptions options = new BuildStatisticsOptions();
 		this.shortStats = this.getShortStats(options);
+		if (this.sRunningBuild.getBranch() != null){
+			this.branch = new PrettyEmailBranchImpl(sRunningBuild.getBranch());
+		}
 	}
 
 	private ShortStatistics getShortStats(BuildStatisticsOptions options){
@@ -166,6 +171,24 @@ public class PrettyEmailContentBuilder {
 			+ " - "
 			+ endDateFormat.format(calFinishDate.getTime())
 			+ " (" + sb.toString() + ")";
+	}
+	
+	public PrettyEmailBranchImpl getBranch(){
+		return this.branch;
+	}
+	
+	public boolean hasBranch(){
+		return this.branch != null;
+	}
+	
+	public String getFormattedBranchName(){
+		if (hasBranch()){
+			if (this.branch.isDefaultBranch){
+				return "default branch";
+			}
+			return this.branch.getDisplayName();
+		}
+		return "";
 	}
 	
 }

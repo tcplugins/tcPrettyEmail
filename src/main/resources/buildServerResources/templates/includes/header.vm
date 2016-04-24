@@ -107,6 +107,12 @@ ul.compile {
 		            <td class=value>$changeCount changes</td>
 	#end
   			          <td class=name>Agent:</td><td class=value>$info.agentName</td></tr>
+#if ($info.hasBranch())
+      	  <tr>
+	            <td class=name>Branch:</td>
+	            <td colspan=3 class=valueWide>$info.formattedBranchName</td>
+	      </tr>
+#end	      
       	  <tr>
 	            <td class=name>Tests:</td>
 	            <td colspan=3 class=valueWide>$info.getFailedTestCount() failed, $info.getNewFailedTestCount() new, $info.getPassedTestCount() passed, $info.getIgnoredTestCount() ignored	</td>

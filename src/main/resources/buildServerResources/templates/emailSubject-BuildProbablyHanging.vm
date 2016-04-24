@@ -1,1 +1,5 @@
+#if ($info.hasBranch())
+Build $info.projectName :: $info.buildTypeName (branch: ${info.formattedBranchName}) #$info.buildNumber is probably hanging ($info.statusLowercase)
+#else
 Build $info.projectName :: $info.buildTypeName #$info.buildNumber is probably hanging ($info.statusLowercase)
+#end
