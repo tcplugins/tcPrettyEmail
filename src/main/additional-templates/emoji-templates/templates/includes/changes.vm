@@ -1,0 +1,36 @@
+#set ($changeCount = $changes.size()) 
+#if ($changeCount == 0)
+<table width=95% class="heading">
+  <tr class=heading>
+    <td class=heading>Changes</td>
+  </tr>
+  <tr class="heading">
+    <td class="heading">
+      <table width=100%>
+        <tr><td colspan=4>There are no changes since the last successful build</td></tr>
+	#else
+	<table width=95% class="heading">
+  <tr class="heading">
+    <td class="heading">Changes - There are $changeCount changes since the last successful build</td>
+    <td class="heading-link">
+     	 <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId&tab=buildChangesDiv">View changes in TeamCity</a>
+    </td>    
+  </tr>
+  <tr class="heading">
+    <td class="heading" colspan=2>
+      <table width=100%>
+      <tr class="changes"><td>User</td><td colspan=2>Description</td><td>Revision</td></tr>
+	#end
+
+
+#foreach( $change in $changes)
+#set ($files = $change.getChanges() )
+        <tr class="changetop"><td valign=top>$change.getUserName() ($change.getChangeCount() files)</td><td colspan=2>$change.getDescription()</td><td>$change.getDisplayVersion()</td></tr>
+  #foreach( $file in $files)
+        <tr><td></td><td colspan=3>$file.getRelativeFileName()</td></tr>
+  #end
+#end
+      </table>
+	    </td>
+	  </tr>
+	</table>

@@ -11,6 +11,7 @@
     	<currentVersion>${majorVersion}.${minorVersion}</currentVersion>
     	<!-- Set the TeamCity version, so that we reference these jars in Maven -->
     	<teamcityVersion>9.1.6</teamcityVersion>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 		
 	<version>${currentVersion}</version>
@@ -110,6 +111,10 @@
     			<echo message=" - Creating ZIP template file" />
     			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${currentVersion}-templates.zip" 
     				 basedir="${project.basedir}/src/main/resources/buildServerResources"
+    			 />
+    			<echo message=" - Creating ZIP Emoji template file" />
+    			<zip destfile="${project.build.directory}/tcPrettyEmailPlugin-${currentVersion}-emoji-templates.zip" 
+    				 basedir="${project.basedir}/src/main/additional-templates/emoji-templates"
     			 />
 
                </tasks>

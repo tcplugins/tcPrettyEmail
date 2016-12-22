@@ -1,0 +1,123 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html><head>
+
+<style>
+	body, td {
+		color:#3f3f3f;
+		font-family:tahoma,verdana,arial,sans-serif;
+		font-size:82%;
+	}
+
+	table {
+	  background-color: #fff;
+	  padding:0px;
+	  margin:0px;
+	  border:1px;
+	  border-color:#010101;
+	}
+
+	table.heading, tr.heading, td.heading {
+	  background-color: #E3E9EF;
+	  color: #101010;
+	  font-size:110%;
+	  padding:1px;
+	  margin:0px;
+	}
+
+table.heading {
+  margin-bottom: 1.5em;
+}
+
+	td.heading a:link, td.heading a:hover, td.heading a:visited {
+		  color: #101010;
+	}
+	
+	td.heading a:link, td.heading a:visited {
+	  text-decoration:none;
+	}
+	
+	td.heading a:hover {
+	  text-decoration:underline;
+	}
+	
+	td.heading-link {
+	  text-align: right;
+	  font-weight: bold;
+	}
+
+	td.name { width:20%; }
+	td.value{ width:38%; }
+	td.valueWide ( width:76%; }
+	td {
+		  padding:0.25em;
+		  font-size:85%;
+	}
+
+	tr.changes td {
+	  font-weight: bold;
+	}
+
+tr.changetop {
+  background-color: #eee;
+}
+
+dd {
+  margin-bottom: 0.5em;
+  font-family:monospace;
+}
+
+.compiler-error {
+  color:#D00000;
+  /* display:inline; */
+  font-family:monospace;
+  white-space:normal;
+}
+
+ul.compile {
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  display: block;
+}
+
+</style></head>
+<body>
+
+
+
+<table width=95% class="heading">
+  <tr class=heading>
+    <td class=heading>&nbsp;<img src='cid:buildState000'>&nbsp;
+     <a href="$info.rootURL/project.html?projectId=$info.projectId">$info.projectName</a> - 
+     <a href="$info.rootURL/viewType.html?buildTypeId=$info.buildTypeId">$info.buildTypeName</a> - 
+     <a href="$info.rootURL/viewLog.html?buildId=$info.buildId&buildTypeId=$info.buildTypeId"># $info.buildNumber</a>
+   </td>
+  </tr>
+  <tr class="heading">
+    <td class="heading">
+      <table width=100%>
+  	      <tr><td class=name>Result:</td><td colspan=3 class=valueWide>$buildStateLong</td></tr>
+        <tr><td class=name>Time:</td><td class=value>$info.getDate()</td><td class=name>Triggered:</td><td class=value>$info.triggeredBy</td></tr>
+        <tr><td class=name>Changes:</td>
+#set ($changeCount = $changes.size())
+#if ($changeCount == 1)
+	            <td class=value>$changeCount change</td>
+	#else
+		            <td class=value>$changeCount changes</td>
+	#end
+  			          <td class=name>Agent:</td><td class=value>$info.agentName</td></tr>
+#if ($info.hasBranch())
+      	  <tr>
+	            <td class=name>Branch:</td>
+	            <td colspan=3 class=valueWide>$info.formattedBranchName</td>
+	      </tr>
+#end	      
+      	  <tr>
+	            <td class=name>Tests:</td>
+	            <td colspan=3 class=valueWide>$info.getFailedTestCount() failed, $info.getNewFailedTestCount() new, $info.getPassedTestCount() passed, $info.getIgnoredTestCount() ignored	</td>
+	      	  </tr>
+	      	</table>
+	    </td>
+	  </tr>
+	</table>

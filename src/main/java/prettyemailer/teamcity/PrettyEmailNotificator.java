@@ -101,6 +101,7 @@ public class PrettyEmailNotificator implements Notificator {
 
 		// FIXME Turn caching on for deployment.
 		velocityEngine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE , false);
+		velocityEngine.setProperty(RuntimeConstants.INPUT_ENCODING, "utf-8");
 		velocityEngine.init();
 		Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: file.resource.loader.path :: " + velocityEngine.getProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH));
 

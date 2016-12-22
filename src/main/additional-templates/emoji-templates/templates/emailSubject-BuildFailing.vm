@@ -1,0 +1,5 @@
+#if ($info.hasBranch())
+🔥 Build $info.projectName :: $info.buildTypeName (branch: ${info.formattedBranchName}) #$info.buildNumber failing ($info.statusLowercase)
+#else
+🔥 Build $info.projectName :: $info.buildTypeName #$info.buildNumber failing ($info.statusLowercase)
+#end

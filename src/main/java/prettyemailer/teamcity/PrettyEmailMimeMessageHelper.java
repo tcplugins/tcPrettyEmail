@@ -25,7 +25,7 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 	
 	PrettyEmailMimeMessageHelper(MimeMessage message, VelocityEngine ve, PrettyEmailContentBuilder content) throws MessagingException{
 		// Create message, and set the multipart flag, so that we can add attachments.
-		super(message, true);
+		super(message, true, "UTF-8");
 		this.velocityEngine = ve;
 		this.content = content;
 	}
