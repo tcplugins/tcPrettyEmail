@@ -4,7 +4,7 @@
 <beans default-autowire="constructor">
 
 	<bean id="prettyEmailMainSettings"
-		class="prettyemailer.teamcity.PrettyEmailMainSettings"
+		class="prettyemailer.teamcity.config.PrettyEmailMainSettings"
 		init-method="register"
 		/>
 

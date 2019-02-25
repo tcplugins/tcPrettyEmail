@@ -12,6 +12,9 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.junit.Test;
 
+import prettyemailer.teamcity.config.PrettyEmailMainConfig;
+import prettyemailer.teamcity.config.PrettyEmailMainSettings;
+
 public class PrettyEmailMainConfigTest {
 
 	@Test

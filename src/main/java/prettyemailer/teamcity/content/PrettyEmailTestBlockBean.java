@@ -1,4 +1,4 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.content;
 
 import jetbrains.buildServer.serverSide.STestRun;
 

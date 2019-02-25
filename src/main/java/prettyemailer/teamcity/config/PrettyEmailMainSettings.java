@@ -1,7 +1,8 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.config;
 
 import jetbrains.buildServer.serverSide.MainConfigProcessor;
 import jetbrains.buildServer.serverSide.SBuildServer;
+import prettyemailer.teamcity.Loggers;
 
 import org.jdom.Element;
 

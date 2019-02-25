@@ -1,4 +1,4 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.mail;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import jetbrains.buildServer.serverSide.SRunningBuild;
+import prettyemailer.teamcity.Loggers;
+import prettyemailer.teamcity.config.PrettyEmailMainConfig;
+import prettyemailer.teamcity.content.PrettyEmailContentBuilder;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -24,7 +27,7 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 	private PrettyEmailContentBuilder content;
 
 	
-	PrettyEmailMimeMessageHelper(MimeMessage message, VelocityEngine ve, PrettyEmailContentBuilder content) throws MessagingException{
+	public PrettyEmailMimeMessageHelper(MimeMessage message, VelocityEngine ve, PrettyEmailContentBuilder content) throws MessagingException{
 		// Create message, and set the multipart flag, so that we can add attachments.
 		super(message, true, "UTF-8");
 		this.velocityEngine = ve;

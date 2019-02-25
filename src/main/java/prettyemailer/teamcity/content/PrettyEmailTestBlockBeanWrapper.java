@@ -1,4 +1,4 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.content;
 
 import java.util.ArrayList;
 import java.util.List;

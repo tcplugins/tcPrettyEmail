@@ -1,4 +1,4 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.config;
 
 import java.util.Properties;
 

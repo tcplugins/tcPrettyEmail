@@ -1,7 +1,9 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.mail;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import prettyemailer.teamcity.config.PrettyEmailMainConfig;
 
 public class PrettyEmailMailSenderFactory {
 	

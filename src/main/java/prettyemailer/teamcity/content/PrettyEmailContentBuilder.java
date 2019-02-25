@@ -1,4 +1,4 @@
-package prettyemailer.teamcity;
+package prettyemailer.teamcity.content;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,6 +14,7 @@ import jetbrains.buildServer.serverSide.ShortStatistics;
 import jetbrains.buildServer.util.TimePrinter;
 import jetbrains.buildServer.vcs.SVcsModification;
 import jetbrains.buildServer.vcs.SelectPrevBuildPolicy;
+import prettyemailer.teamcity.Loggers;
 
 public class PrettyEmailContentBuilder {
 	SRunningBuild sRunningBuild;

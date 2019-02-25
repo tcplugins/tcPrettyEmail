@@ -17,6 +17,11 @@ import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.users.SUser;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
+import prettyemailer.teamcity.config.PrettyEmailMainConfig;
+import prettyemailer.teamcity.config.PrettyEmailMainSettings;
+import prettyemailer.teamcity.content.PrettyEmailContentBuilder;
+import prettyemailer.teamcity.mail.PrettyEmailMailSenderFactory;
+import prettyemailer.teamcity.mail.PrettyEmailMimeMessageHelper;
 
 public class PrettyEmailNotificator extends NotificatorAdapter implements Notificator {
 
