@@ -8,7 +8,7 @@ import org.jdom.Element;
 public class PrettyEmailMainSettings implements MainConfigProcessor {
 	private PrettyEmailMainConfig prettyEmailMainConfig;
 	private SBuildServer server;
-	private boolean SettingsExist = false;
+	private boolean settingsExist = false;
 
 	public PrettyEmailMainSettings(SBuildServer server){
 		Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: Constructor called");
@@ -31,7 +31,7 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
     	PrettyEmailMainConfig tempConfig = new PrettyEmailMainConfig();
     	Element emailElement = rootElement.getChild("pretty-email");
     	if(emailElement != null){
-    		this.SettingsExist = true;
+    		this.settingsExist = true;
 			Element smtpElement = emailElement.getChild("smtp");
 	        if(smtpElement != null){
        	
@@ -166,7 +166,7 @@ public class PrettyEmailMainSettings implements MainConfigProcessor {
     }
     
     public boolean doSettingsExist(){
-    	return this.SettingsExist;
+    	return this.settingsExist;
     }
     
 	public void dispose() {

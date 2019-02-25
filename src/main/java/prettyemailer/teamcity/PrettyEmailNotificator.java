@@ -1,47 +1,37 @@
 package prettyemailer.teamcity;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.mail.MessagingException;
 
-import jetbrains.buildServer.Build;
-import jetbrains.buildServer.notification.Notificator;
-import jetbrains.buildServer.notification.NotificatorRegistry;
-import jetbrains.buildServer.responsibility.ResponsibilityEntry;
-import jetbrains.buildServer.responsibility.TestNameResponsibilityEntry;
-import jetbrains.buildServer.serverSide.SBuildServer;
-import jetbrains.buildServer.serverSide.SBuildType;
-import jetbrains.buildServer.serverSide.SProject;
-import jetbrains.buildServer.serverSide.SRunningBuild;
-import jetbrains.buildServer.serverSide.STest;
-import jetbrains.buildServer.serverSide.mute.MuteInfo;
-import jetbrains.buildServer.serverSide.problems.BuildProblemInfo;
-import jetbrains.buildServer.tests.TestName;
-import jetbrains.buildServer.users.SUser;
-import jetbrains.buildServer.web.openapi.PluginDescriptor;
-
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 
-public class PrettyEmailNotificator implements Notificator {
+import jetbrains.buildServer.notification.Notificator;
+import jetbrains.buildServer.notification.NotificatorAdapter;
+import jetbrains.buildServer.notification.NotificatorRegistry;
+import jetbrains.buildServer.serverSide.SBuildServer;
+import jetbrains.buildServer.serverSide.SRunningBuild;
+import jetbrains.buildServer.users.SUser;
+import jetbrains.buildServer.web.openapi.PluginDescriptor;
+
+public class PrettyEmailNotificator extends NotificatorAdapter implements Notificator {
 
 	private static final String TYPE = "prettyEmailNotifier";
 	private static final String TYPE_NAME = "Pretty Email Notifier";
-	private static SBuildServer server;
-	private static PluginDescriptor myPluginDescriptor;
-	private static VelocityEngine velocityEngine;
+	private SBuildServer myServer;
+	private PluginDescriptor myPluginDescriptor;
+	private VelocityEngine velocityEngine;
 
-	private static JavaMailSenderImpl mailSender;
-	private static NotificatorRegistry notificatorRegistry;
-	private static PrettyEmailMainSettings mySettings;
-	private static PrettyEmailMainConfig myConfig;
+	private NotificatorRegistry myNotificatorRegistry;
+	private PrettyEmailMainSettings mySettings;
+	private PrettyEmailMainConfig myConfig;
 	
-	private static String templatePath;
-	private static String attachmentPath;
+	private String templatePath;
+	private String attachmentPath;
 
 
 	public PrettyEmailNotificator(NotificatorRegistry notificatorRegistry,
@@ -49,24 +39,21 @@ public class PrettyEmailNotificator implements Notificator {
 			PrettyEmailMainSettings settings)
 			throws IOException {
 		
-		PrettyEmailNotificator.server = server;
-		PrettyEmailNotificator.mySettings = settings;
-		PrettyEmailNotificator.myPluginDescriptor = pluginDescriptor;
-		PrettyEmailNotificator.notificatorRegistry = notificatorRegistry;
-		PrettyEmailNotificator.velocityEngine = new VelocityEngine();
-		PrettyEmailNotificator.mailSender = new JavaMailSenderImpl();
-		PrettyEmailNotificator.myConfig = PrettyEmailNotificator.mySettings.getConfig();
+		myServer = server;
+		mySettings = settings;
+		myPluginDescriptor = pluginDescriptor;
+		myNotificatorRegistry = notificatorRegistry;
+		myConfig = mySettings.getConfig();
 		
 	}
 
 	public void register() {
-		// Set these to the defaults, since we can't rely on the the MainSettings factory having been registered by spring yet.
-		PrettyEmailNotificator.templatePath = server.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "templates/";
-		PrettyEmailNotificator.attachmentPath = server.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "img/";
+		templatePath = myServer.getServerRootPath() + myPluginDescriptor.getPluginResourcesPath() + "templates/";
+		attachmentPath = myServer.getServerRootPath() + myPluginDescriptor.getPluginResourcesPath() + "img/";
 		
 		try {
-			initVelocity();
-			notificatorRegistry.register(this);
+			velocityEngine = initVelocity();
+			myNotificatorRegistry.register(this);
 			Loggers.SERVER.info(this.getClass().getSimpleName() + " :: Registering");
 		} catch (Exception e) {
 			Loggers.SERVER.error(this.getClass().getSimpleName() + " :: " + PrettyEmailNotificator.TYPE + " was NOT successfully registered. See DEBUG for Stacktrace");
@@ -76,28 +63,27 @@ public class PrettyEmailNotificator implements Notificator {
 
 	}
 
-	private void reloadSettings() {
-		PrettyEmailNotificator.myConfig = PrettyEmailNotificator.mySettings.getConfig();
+	private void reloadSettings(PrettyEmailMainConfig myConfig) {
 		
 		if (myConfig.getTemplatePath() != null){
-			PrettyEmailNotificator.templatePath = myConfig.getTemplatePath(); 
+			templatePath = myConfig.getTemplatePath(); 
 		} else {
-			PrettyEmailNotificator.templatePath = server.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "templates/";
+			templatePath = myServer.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "templates/";
 		}
 
 		if (myConfig.getAttachmentPath() != null){
-			PrettyEmailNotificator.attachmentPath 
-					= myConfig.getAttachmentPath(); 
+			attachmentPath = myConfig.getAttachmentPath(); 
 		} else {
-			PrettyEmailNotificator.attachmentPath 
-					= server.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "img/";
+			attachmentPath = myServer.getServerRootPath()+ myPluginDescriptor.getPluginResourcesPath() + "img/";
 		}
 	}
 
-	private void initVelocity() throws Exception {
+	private VelocityEngine initVelocity() throws Exception {
+		
+		VelocityEngine velocityEngine = new VelocityEngine();
 		
 		velocityEngine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-				PrettyEmailNotificator.templatePath);
+				templatePath);
 
 		// FIXME Turn caching on for deployment.
 		velocityEngine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE , false);
@@ -105,14 +91,16 @@ public class PrettyEmailNotificator implements Notificator {
 		velocityEngine.init();
 		Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: file.resource.loader.path :: " + velocityEngine.getProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH));
 
+		return velocityEngine;
 	}
 	
 
-	
+	@Override
 	public String getNotificatorType() {
 		return TYPE;
 	}
 
+	@Override
 	public String getDisplayName() {
 		return TYPE_NAME;
 	}
@@ -128,11 +116,10 @@ public class PrettyEmailNotificator implements Notificator {
 		
 		if ( ! mySettings.getConfig().equals(myConfig)){ 
 			Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: Settings have changed. Attempting to reload settings and velocity");
-			PrettyEmailNotificator.velocityEngine = null;
-			PrettyEmailNotificator.velocityEngine = new VelocityEngine();
-			reloadSettings();
+			reloadSettings(mySettings.getConfig());
+			myConfig = mySettings.getConfig();
 			try {
-				initVelocity();
+				velocityEngine = initVelocity();
 			} catch (Exception e) {
 				Loggers.SERVER.error(this.getClass().getSimpleName() + " :: " + PrettyEmailNotificator.TYPE + ". Failed to re-initialise Velocity. Are your main-config.xml settings correct");
 				Loggers.SERVER.debug(e);
@@ -140,39 +127,23 @@ public class PrettyEmailNotificator implements Notificator {
 			}
 		}
 		
-		
-		
-		PrettyEmailNotificator.mailSender.setHost(myConfig.getSmtpHost());
-		PrettyEmailNotificator.mailSender.setPort(myConfig.getSmtpPort());
-		PrettyEmailNotificator.mailSender.setJavaMailProperties(myConfig.getMailProperties());
-		if (myConfig.getSmtpUsername() != null){
-			PrettyEmailNotificator.mailSender.setUsername(myConfig.getSmtpUsername());
-		}
-		if (myConfig.getSmtpPassword() != null){
-			PrettyEmailNotificator.mailSender.setPassword(myConfig.getSmtpPassword());
-		}
-		
-		PrettyEmailContentBuilder content = new PrettyEmailContentBuilder(sRunningBuild, server, myConfig.getMaxTestsToShow(), myConfig.getMaxErrorLinesToShow());
+
+		JavaMailSender mailSender = PrettyEmailMailSenderFactory.getJavaMailSender(myConfig);
+		PrettyEmailContentBuilder content = new PrettyEmailContentBuilder(
+													sRunningBuild, 
+													myServer, 
+													myConfig.getMaxTestsToShow(), 
+													myConfig.getMaxErrorLinesToShow()
+												);
 		
 		try {
 
 			PrettyEmailMimeMessageHelper helper = new PrettyEmailMimeMessageHelper(
-					PrettyEmailNotificator.mailSender.createMimeMessage(), 
-					PrettyEmailNotificator.velocityEngine,
-					content);
+					mailSender.createMimeMessage(), 
+					velocityEngine,
+					content).build(myConfig);
 			
-			if (myConfig.getFromAddress() != null 
-			 && myConfig.getFromName() != null ){
-				helper.setFrom(myConfig.getFromAddress(),
-						myConfig.getFromName());
-			} else if (myConfig.getFromAddress() != null){
-				helper.setFrom(myConfig.getFromAddress());
-			} else {
-				Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: No from-address set in main-config.xml. PrettyEmail sending will fail!");
-				helper.setFrom("");
-			}
-			
-			helper.generateEmail(sRunningBuild, reason, myConfig.getAttachImages(), PrettyEmailNotificator.attachmentPath);
+			helper.generateEmail(sRunningBuild, reason, myConfig.getAttachImages(), attachmentPath);
 
 
 			for (SUser user : sUsers) {
@@ -188,7 +159,7 @@ public class PrettyEmailNotificator implements Notificator {
 					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Invalid Email address for " + user.getUsername() + " (" + user.getEmail() + ")");
 				}
 				try {
-					PrettyEmailNotificator.mailSender.send(helper.getMimeMessage());
+					mailSender.send(helper.getMimeMessage());
 				} catch (MailException mEx){
 					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: Could not send email to " + user.getUsername() + " (" + user.getEmail() + ")" + " See DEBUG output and/or STDOUT for Stacktrace");
 					Loggers.SERVER.debug(mEx);
@@ -219,111 +190,31 @@ public class PrettyEmailNotificator implements Notificator {
 		}
 	}
 
-	
+	@Override
 	public void notifyBuildStarted(SRunningBuild sRunningBuild,
 			Set<SUser> sUsers) {
 		doNotifications("BuildStarted", sUsers, sRunningBuild);
 	}
 
+	@Override
 	public void notifyBuildSuccessful(SRunningBuild sRunningBuild,
 			Set<SUser> sUsers) {
 		doNotifications("BuildSuccessful", sUsers, sRunningBuild);
 	}
 
+	@Override
 	public void notifyBuildFailed(SRunningBuild sRunningBuild, Set<SUser> sUsers) {
 		doNotifications("BuildFailed", sUsers, sRunningBuild);
 	}
 
-	public void notifyLabelingFailed(Build build,
-			jetbrains.buildServer.vcs.VcsRoot vcsRoot, Throwable throwable, Set<SUser> sUsers) {
-		// doNotifications("LabelingFailed" ,sUsers, sRunningBuild);
-	}
-
+	@Override
 	public void notifyBuildFailing(SRunningBuild sRunningBuild,	Set<SUser> sUsers) {
 		doNotifications("BuildFailing", sUsers, sRunningBuild);
 	}
 
+	@Override
 	public void notifyBuildProbablyHanging(SRunningBuild sRunningBuild, Set<SUser> sUsers) {
 		doNotifications("BuildProbablyHanging", sUsers, sRunningBuild);
 	}
-
-	public void notifyResponsibleChanged(SBuildType sBuildType, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleAssigned(SBuildType sBuildType, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleAssigned(TestNameResponsibilityEntry arg0,
-			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-	}
-
-	public void notifyResponsibleChanged(TestNameResponsibilityEntry arg0,
-			TestNameResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-	}	
-	
-	
-	public void notifyBuildFailedToStart(SRunningBuild arg0, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyResponsibleAssigned(Collection<TestName> arg0, ResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyResponsibleChanged(Collection<TestName> arg0, ResponsibilityEntry arg1, SProject arg2, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyTestsMuted(Collection<STest> arg0, MuteInfo arg1, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyTestsUnmuted(Collection<STest> arg0, MuteInfo arg1, SUser arg2, Set<SUser> sUsers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyBuildProblemResponsibleAssigned(
-			Collection<BuildProblemInfo> arg0, ResponsibilityEntry arg1,
-			SProject arg2, Set<SUser> arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyBuildProblemResponsibleChanged(
-			Collection<BuildProblemInfo> arg0, ResponsibilityEntry arg1,
-			SProject arg2, Set<SUser> arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyBuildProblemsMuted(Collection<BuildProblemInfo> arg0,
-			MuteInfo arg1, Set<SUser> arg2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void notifyBuildProblemsUnmuted(Collection<BuildProblemInfo> arg0,
-			MuteInfo arg1, SUser arg2, Set<SUser> arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// New methods from TC 9.1.6
-	
-	
 
 }

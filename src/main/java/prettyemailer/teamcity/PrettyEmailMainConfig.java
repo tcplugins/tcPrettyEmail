@@ -4,6 +4,9 @@ import java.util.Properties;
 
 import org.jdom.Element;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class PrettyEmailMainConfig {
 	private Integer smtpPort = 25;
 	private String smtpHost = null;
@@ -21,10 +24,6 @@ public class PrettyEmailMainConfig {
 	public final Integer defaultMaxErrorLinesToShow = maxErrorLinesToShow;
 	private boolean attachImages = true;
 	
-
-	public PrettyEmailMainConfig() {
-
-	}
 
 	public Element getSmtpAsElement(){
 		/*

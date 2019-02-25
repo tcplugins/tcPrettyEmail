@@ -17,7 +17,7 @@ public class PrettyEmailMainConfigTest {
 	@Test
 	public void testPrettyEmailMainConfig() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
-		assertTrue(mc.getMaxTestsToShow() == mc.defaultMaxTestsToShow);
+		assertEquals(mc.defaultMaxTestsToShow, mc.getMaxTestsToShow());
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetSmtpPort() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setSmtpPort(100);
-		assertTrue(mc.getSmtpPort() == 100);
+		assertEquals(Integer.valueOf(100), mc.getSmtpPort());
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetSmtpHost() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setSmtpHost("foobar.foo.bar");
-		assertTrue(mc.getSmtpHost().equals("foobar.foo.bar"));
+		assertEquals("foobar.foo.bar", mc.getSmtpHost());
 	}
 
 	@Test
@@ -136,7 +136,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetSmtpUsername() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setSmtpUsername("foobar");
-		assertTrue(mc.getSmtpUsername().equals("foobar"));
+		assertEquals("foobar", mc.getSmtpUsername());
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetSmtpPassword() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setSmtpPassword("barfoo");
-		assertTrue(mc.getSmtpPassword().equals("barfoo"));
+		assertEquals("barfoo", mc.getSmtpPassword());
 	}
 
 	@Test
@@ -160,7 +160,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetFromAddress() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setFromAddress("barfoo@example.com");
-		assertTrue(mc.getFromAddress().equals("barfoo@example.com"));
+		assertEquals("barfoo@example.com", mc.getFromAddress());
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetTemplatePath() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setTemplatePath("/opt/Foo/Bar");
-		assertTrue(mc.getTemplatePath().equals("/opt/Foo/Bar"));
+		assertEquals("/opt/Foo/Bar", mc.getTemplatePath());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class PrettyEmailMainConfigTest {
 	public void testGetAttachmentPath() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setAttachmentPath("/opt/Bar/Foo/Bar");
-		assertTrue(mc.getAttachmentPath().equals("/opt/Bar/Foo/Bar"));
+		assertEquals("/opt/Bar/Foo/Bar", mc.getAttachmentPath());
 	}
 
 	@Test
@@ -208,27 +208,27 @@ public class PrettyEmailMainConfigTest {
 	@Test
 	public void testGetMaxTestsToShow() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
-		assertTrue(mc.getMaxTestsToShow() == mc.defaultMaxTestsToShow);
+		assertEquals(mc.defaultMaxTestsToShow, mc.getMaxTestsToShow());
 	}
 
 	@Test
 	public void testSetMaxTestsToShow() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setMaxTestsToShow(1000);
-		assertTrue(mc.getMaxTestsToShow() == 1000);
+		assertEquals(Integer.valueOf(1000), mc.getMaxTestsToShow());
 	}
 
 	@Test
 	public void testGetMaxErrorLinesToShow() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
-		assertTrue(mc.getMaxErrorLinesToShow() == mc.defaultMaxErrorLinesToShow);
+		assertEquals(mc.defaultMaxErrorLinesToShow, mc.getMaxErrorLinesToShow());
 	}
 
 	@Test
 	public void testSetMaxErrorLinesToShow() {
 		PrettyEmailMainConfig mc = new PrettyEmailMainConfig();
 		mc.setMaxErrorLinesToShow(1001);
-		assertTrue(mc.getMaxErrorLinesToShow() == 1001);
+		assertEquals(Integer.valueOf(1001), mc.getMaxErrorLinesToShow());
 	}
 
 	@Test

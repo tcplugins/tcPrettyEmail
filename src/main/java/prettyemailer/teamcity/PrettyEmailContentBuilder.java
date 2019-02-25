@@ -6,14 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import jetbrains.buildServer.serverSide.Branch;
 import jetbrains.buildServer.serverSide.BuildStatisticsOptions;
 import jetbrains.buildServer.serverSide.CompilationBlockBean;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.SRunningBuild;
-import jetbrains.buildServer.serverSide.STestRun;
 import jetbrains.buildServer.serverSide.ShortStatistics;
-//import jetbrains.buildServer.serverSide.TestBlockBean;
 import jetbrains.buildServer.util.TimePrinter;
 import jetbrains.buildServer.vcs.SVcsModification;
 import jetbrains.buildServer.vcs.SelectPrevBuildPolicy;

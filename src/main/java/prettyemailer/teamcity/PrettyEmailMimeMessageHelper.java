@@ -3,6 +3,7 @@ package prettyemailer.teamcity;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -31,10 +32,16 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 	}
 	
 	public void generateEmail(SRunningBuild sRunningBuild, 
-			String reason, boolean addAttachments, String attachmentPath) 
-		   throws ResourceNotFoundException, ParseErrorException, 
-		   			MethodInvocationException, IOException, MessagingException, Exception
-{
+							  String reason, 
+							  boolean addAttachments, 
+							  String attachmentPath) 
+		   throws ResourceNotFoundException, 
+		   		  ParseErrorException, 
+		   		  MethodInvocationException, 
+		   		  IOException, 
+		   		  MessagingException, 
+		   		  Exception
+	{
 		
 		VelocityContext context = new VelocityContext();
 		context.put("tests", content.getTests());
@@ -65,6 +72,20 @@ public class PrettyEmailMimeMessageHelper extends MimeMessageHelper {
 				this.addInline("newTest000", newTestResource);
 			}
 		}
+	}
+
+	public PrettyEmailMimeMessageHelper build(PrettyEmailMainConfig myConfig) throws UnsupportedEncodingException, MessagingException {
+		if (myConfig.getFromAddress() != null 
+				 && myConfig.getFromName() != null ){
+					this.setFrom(myConfig.getFromAddress(),
+							myConfig.getFromName());
+				} else if (myConfig.getFromAddress() != null){
+					this.setFrom(myConfig.getFromAddress());
+				} else {
+					Loggers.SERVER.warn(this.getClass().getSimpleName() + " :: No from-address set in main-config.xml. PrettyEmail sending will fail!");
+					this.setFrom("");
+				}
+		return this;
 	}
 	
 }
