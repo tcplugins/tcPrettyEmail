@@ -21,6 +21,7 @@ public class PrettyEmailContentBuilder {
 	SBuildServer sBuildServer;
 	ShortStatistics shortStats;
 	PrettyEmailBranchImpl branch = null;
+	PrettyEmailBuildStatistics statistics = null;
 	int maxTestsToLoad;
 	int maxErrorLinesToLoad;
 
@@ -34,6 +35,7 @@ public class PrettyEmailContentBuilder {
 		if (this.sRunningBuild.getBranch() != null){
 			this.branch = new PrettyEmailBranchImpl(sRunningBuild.getBranch());
 		}
+		this.statistics = PrettyEmailBuildStatistics.build(sRunningBuild);
 	}
 
 	private ShortStatistics getShortStats(BuildStatisticsOptions options){
@@ -189,4 +191,7 @@ public class PrettyEmailContentBuilder {
 		return "";
 	}
 	
+	public PrettyEmailBuildStatistics getStatistics() {
+		return this.statistics;
+	}
 }
